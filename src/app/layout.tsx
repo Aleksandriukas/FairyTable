@@ -1,6 +1,11 @@
 import { PropsWithChildren } from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StatusBar, StyleSheet, Text, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 export default function MainLayout({ children }: PropsWithChildren<{}>) {
-    return <View style={StyleSheet.absoluteFill}>{children}</View>;
+    return (
+        <SafeAreaProvider>
+            <View style={StyleSheet.absoluteFill}>{children}</View>
+        </SafeAreaProvider>
+    );
 }
