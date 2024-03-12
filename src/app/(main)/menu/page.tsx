@@ -2,7 +2,7 @@ import { Pressable, Text, FlatList, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { DishBean } from '../../../beans/DishBean';
 import { supabase } from '../../../supabase/supabase';
-import { Appbar, MD3Colors, useTheme } from 'react-native-paper';
+import { Appbar, useTheme } from 'react-native-paper';
 import { useLinkTo } from '../../../../charon';
 import { DishListItem } from './DishListItem';
 

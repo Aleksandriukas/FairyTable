@@ -1,7 +1,6 @@
 import { View } from 'react-native';
 import { DishBean } from '../../../beans/DishBean';
 import { Text, useTheme, TouchableRipple } from 'react-native-paper';
-import { link } from 'fs';
 import { useLinkTo } from '../../../../charon';
 import { supabase } from '../../../supabase/supabase';
 import { useEffect, useState } from 'react';
