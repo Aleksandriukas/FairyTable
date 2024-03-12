@@ -7,3 +7,5 @@ export {
     createTabsConditionalNavigator,
     type TabsConditionalNavigatorProps,
 } from './src/components/TabsConditionalNavigator';
+
+//https://github.com/ArtiomTr
