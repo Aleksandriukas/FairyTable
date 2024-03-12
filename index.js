@@ -14,7 +14,9 @@ const context = require.context(
 );
 
 export default function App() {
-    return <Router context={context} linking={{}} />;
+    return (
+        <Router context={context} linking={{ prefixes: ['FairyTable://'], getInitialURL: () => 'FairyTable://menu' }} />
+    );
 }
 
 AppRegistry.registerComponent(appName, () => App);

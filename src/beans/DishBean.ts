@@ -3,5 +3,5 @@ export type DishBean = {
     title: string;
     description: string;
     price: number;
-    image: string;
+    photoURL: string;
 };
