@@ -2,7 +2,7 @@ import { createSafeContext, useSafeContext } from '@sirse-dev/safe-context';
 
 export type MainContextType = {
     itemQuantity: number;
-    setItemQuantity: (quantity: number) => void;
+    setItemQuantity: React.Dispatch<React.SetStateAction<number>>;
 };
 
 export const MainContext = createSafeContext<MainContextType>();

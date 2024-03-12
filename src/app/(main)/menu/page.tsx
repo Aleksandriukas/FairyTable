@@ -1,9 +1,9 @@
 import { Pressable, Text, FlatList, View } from 'react-native';
 import { useEffect, useState } from 'react';
-import { DishBean } from '../../beans/DishBean';
-import { supabase } from '../../supabase/supabase';
+import { DishBean } from '../../../beans/DishBean';
+import { supabase } from '../../../supabase/supabase';
 import { Appbar, MD3Colors, useTheme } from 'react-native-paper';
-import { useLinkTo } from '../../../charon';
+import { useLinkTo } from '../../../../charon';
 import { DishListItem } from './DishListItem';
 
 export default function MainPage() {
@@ -16,7 +16,6 @@ export default function MainPage() {
     const fetchDishes = async () => {
         try {
             const { data, error } = await supabase.from('Dish').select('*');
-            console.log(data);
             if (error) {
                 throw error;
             }
@@ -36,7 +35,7 @@ export default function MainPage() {
                 <Appbar.Content title="Menu" />
                 <Appbar.Action
                     onPress={() => {
-                        linkTo('/register');
+                        linkTo('/auth');
                     }}
                     icon="account"
                 />
