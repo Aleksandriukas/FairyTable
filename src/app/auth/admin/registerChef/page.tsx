@@ -1,15 +1,12 @@
 import { Pressable, Text, AppState, FlatList, View, StyleSheet } from 'react-native';
-import { useLinkTo } from '../../../charon';
+import { useLinkTo } from '../../../../../charon';
 import { useEffect, useState } from 'react';
-import { supabase } from '../../supabase/supabase';
+import { supabase } from '../../../../supabase/supabase';
 import { Image } from 'react-native-elements';
 import { HelperText, TextInput, Button } from 'react-native-paper';
 import { jwtDecode } from 'jwt-decode';
-import { Session } from '@supabase/supabase-js';
 
-export default function MainPage() {
-
-    const [session, setSession] = useState<Session | null>(null)
+export default function RegisterChefPage() {
     const linkTo = useLinkTo();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -19,33 +16,33 @@ export default function MainPage() {
     }
 
     const hasPasswordErrors = () => {
-        return password.length < 5
+        return password.length < 6
     }
 
     const onChangeEmail = (email: string) => setEmail(email)
 
     const onChangePassword = (password: string) => setPassword(password)
 
-    const signIn = async () => {
+    const register = async () => {
         try {
-            const { data, error } = await supabase.auth.signInWithPassword({
+            const { data, error } = await supabase.auth.signUp({
                 email: email,
                 password: password,
             })
-            const jwtEncoded = data.session?.access_token
-            if(jwtEncoded) {
-                const jwt = jwtDecode(jwtEncoded)
-                const userRole = jwt.user_role
-                linkTo(`/auth/${userRole}`);
+            if(error) {
+                throw error
             }
+            console.log(data)
         } catch(error) {
             console.log(error)
         }
     }
 
     return (
-        
         <View>
+            <Text>
+                Register a chef
+            </Text>
             <TextInput label="Email" value={email} onChangeText={onChangeEmail}
 
             />
@@ -56,19 +53,15 @@ export default function MainPage() {
                 
             />
             <HelperText type="error" visible={hasPasswordErrors()}>
-                {hasPasswordErrors() ? 'Password must have at least 5 symbols' : 'Password is valid!'}
+                {hasPasswordErrors() ? 'Password must have at least 6 symbols' : 'Password is valid!'}
             </HelperText>
             <Button
                 onPress={() => {
-                    signIn()
+                    register()
                 }}
             >
-                Sign in
+                Register the chef
             </Button>
         </View>
-    );
+    )
 }
-
-const styles = StyleSheet.create({
-    
-});
