@@ -1,9 +1,12 @@
 import { View } from 'react-native';
 import { useLinkTo } from '../../../../charon';
 import { supabase } from '../../../supabase/supabase';
-import { IconButton, useTheme } from 'react-native-paper';
+import { Appbar, IconButton, useTheme } from 'react-native-paper';
+import { useNavigation } from '@react-navigation/native';
+import { useEffect } from 'react';
 
 export default function AdminPage() {
+    const { goBack } = useNavigation();
     const linkTo = useLinkTo();
     const { colors } = useTheme();
 
@@ -17,22 +20,29 @@ export default function AdminPage() {
         }
     }
 
+    
+
     return (
         <View>
-            <IconButton
-                iconColor={colors.onPrimary}
-                containerColor={colors.primary}
-                mode="contained"
-                onPress={() => {linkTo('/auth/admin/registerChef')}}
-                icon="script-text-key"
-            />
-            <IconButton
-                iconColor={colors.onPrimary}
-                containerColor={colors.primary}
-                mode="contained"
-                onPress={signOut}
-                icon="exit-to-app"
-            />
+            <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
+                <Appbar.BackAction onPress={goBack} />
+                <Appbar.Content title="Admin page" />
+                <IconButton
+                    iconColor={colors.onPrimary}
+                    containerColor={colors.primary}
+                    mode="contained"
+                    onPress={() => {linkTo('/auth/admin/registerChef')}}
+                    icon="script-text-key"
+                />
+                <IconButton
+                    iconColor={colors.onPrimary}
+                    containerColor={colors.primary}
+                    mode="contained"
+                    onPress={signOut}
+                    icon="exit-to-app"
+                />
+            </Appbar.Header>
+            
         </View>
     )
 

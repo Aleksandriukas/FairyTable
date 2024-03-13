@@ -3,13 +3,14 @@ import { useLinkTo } from '../../../charon';
 import { useEffect, useState } from 'react';
 import { supabase } from '../../supabase/supabase';
 import { Image } from 'react-native-elements';
-import { HelperText, TextInput, Button } from 'react-native-paper';
+import { HelperText, TextInput, Button, Appbar, useTheme } from 'react-native-paper';
 import { jwtDecode } from 'jwt-decode';
 import { Session } from '@supabase/supabase-js';
+import { useNavigation } from '@react-navigation/native';
 
 export default function MainPage() {
-
-    const [session, setSession] = useState<Session | null>(null)
+    const { colors } = useTheme();
+    const { goBack } = useNavigation();
     const linkTo = useLinkTo();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
@@ -45,26 +46,32 @@ export default function MainPage() {
 
     return (
         
-        <View>
-            <TextInput label="Email" value={email} onChangeText={onChangeEmail}
+        <View style={{flex: 1}}>
+            <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
+                <Appbar.BackAction onPress={goBack} />
+                <Appbar.Content title="Authentication" />
+            </Appbar.Header>
+            <View style={{justifyContent: 'center', alignContent: 'center', flex: 1, paddingHorizontal: 12}}>
+                <TextInput mode="outlined" label="Email" value={email} onChangeText={onChangeEmail}
 
-            />
-            <HelperText type="error" visible={hasEmailErrors()}>
-                {hasEmailErrors() ? 'Email needs a @ symbol!' : 'Email is valid!'}
-            </HelperText>
-            <TextInput label="Password" value={password} onChangeText={onChangePassword}
-                
-            />
-            <HelperText type="error" visible={hasPasswordErrors()}>
-                {hasPasswordErrors() ? 'Password must have at least 5 symbols' : 'Password is valid!'}
-            </HelperText>
-            <Button
-                onPress={() => {
-                    signIn()
-                }}
-            >
-                Sign in
-            </Button>
+                />
+                <HelperText type="error" visible={hasEmailErrors()}>
+                    {hasEmailErrors() ? 'Email needs a @ symbol!' : ''}
+                </HelperText>
+                <TextInput mode="outlined" label="Password" value={password} onChangeText={onChangePassword}
+                    
+                />
+                <HelperText type="error" visible={hasPasswordErrors()}>
+                    {hasPasswordErrors() ? 'Password must have at least 5 symbols' : ''}
+                </HelperText>
+                <Button
+                    onPress={() => {
+                        signIn()
+                    }}
+                >
+                    Sign in
+                </Button>
+            </View>
         </View>
     );
 }

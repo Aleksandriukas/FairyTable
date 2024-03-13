@@ -25,14 +25,13 @@ export default function RegisterChefPage() {
 
     const register = async () => {
         try {
-            const { data, error } = await supabase.auth.signUp({
+            const { error } = await supabase.auth.signUp({
                 email: email,
                 password: password,
             })
             if(error) {
                 throw error
             }
-            console.log(data)
         } catch(error) {
             console.log(error)
         }
