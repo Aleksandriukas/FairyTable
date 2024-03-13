@@ -17,22 +17,6 @@ export const DishListItem = ({ data }: DishListItemProps) => {
 
     const linkTo = useLinkTo();
 
-    const [imagePlace, setImagePlace] = useState<string | null>(null);
-
-    const fetchImage = async () => {
-        try {
-            const { data: image } = await supabase.storage.from('dishes').getPublicUrl(data.photoURL ?? null);
-
-            console.log(image);
-            setImagePlace(image.publicUrl);
-        } catch (error) {
-            console.log(error);
-        }
-    };
-    useEffect(() => {
-        fetchImage();
-    }, []);
-
     return (
         <TouchableRipple
             onPress={() => {
@@ -59,8 +43,11 @@ export const DishListItem = ({ data }: DishListItemProps) => {
                         justifyContent: 'center',
                     }}
                 >
-                    {imagePlace && (
-                        <Image style={{ height: 64, width: 64, borderRadius: 16 }} source={{ uri: imagePlace }}></Image>
+                    {data.photoURL && (
+                        <Image
+                            style={{ height: 64, width: 64, borderRadius: 16 }}
+                            source={{ uri: data.photoURL }}
+                        ></Image>
                     )}
                 </View>
                 <View style={{ flexShrink: 1, alignSelf: 'center', justifyContent: 'space-evenly', width: '100%' }}>

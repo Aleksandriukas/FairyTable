@@ -1,59 +1,44 @@
-import { Pressable, Text, FlatList, View } from "react-native";
-import { useEffect, useState } from "react";
-import { DishBean } from "../../../beans/DishBean";
-import { supabase } from "../../../supabase/supabase";
-import { Appbar, useTheme } from "react-native-paper";
-import { useLinkTo } from "../../../../charon";
-import { DishListItem } from "./DishListItem";
+import { Pressable, Text, FlatList, View } from 'react-native';
+import { useEffect, useState } from 'react';
+import { DishBean } from '../../../beans/DishBean';
+import { supabase } from '../../../supabase/supabase';
+import { Appbar, useTheme } from 'react-native-paper';
+import { useLinkTo } from '../../../../charon';
+import { DishListItem } from './DishListItem';
+import { useMainContext } from './MainContext';
 
 export default function MainPage() {
-  const linkTo = useLinkTo();
+    const linkTo = useLinkTo();
 
-  const [dishes, setDishes] = useState<DishBean[] | undefined>(undefined);
+    const { colors } = useTheme();
 
-  const { colors } = useTheme();
+    const { dishes, updateDishes, isLoading } = useMainContext();
 
-  const fetchDishes = async () => {
-    try {
-      const { data, error } = await supabase.from("Dish").select("*");
-      if (error) {
-        throw error;
-      }
+    useEffect(() => {
+        updateDishes();
+    }, []);
 
-      setDishes(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-  useEffect(() => {
-    fetchDishes();
-  }, []);
-
-  return (
-    <View style={{ flex: 1 }}>
-      <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
-        <Appbar.Content title="Menu" />
-        <Appbar.Action
-          onPress={() => {
-            linkTo("/auth");
-          }}
-          icon="account"
-        />
-      </Appbar.Header>
-      <FlatList
-        ItemSeparatorComponent={() => {
-          return (
-            <View
-              style={{ height: 1, backgroundColor: colors.outlineVariant }}
+    return (
+        <View style={{ flex: 1 }}>
+            <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
+                <Appbar.Content title="Menu" />
+                <Appbar.Action
+                    onPress={() => {
+                        linkTo('/auth');
+                    }}
+                    icon="account"
+                />
+            </Appbar.Header>
+            <FlatList
+                refreshing={isLoading}
+                onRefresh={updateDishes}
+                ItemSeparatorComponent={() => {
+                    return <View style={{ height: 1, backgroundColor: colors.outlineVariant }} />;
+                }}
+                renderItem={({ item, index }) => <DishListItem data={item} key={index} />}
+                keyExtractor={(item) => item.id.toString()}
+                data={dishes}
             />
-          );
-        }}
-        renderItem={({ item, index }) => (
-          <DishListItem data={item} key={index} />
-        )}
-        keyExtractor={(item) => item.id.toString()}
-        data={dishes}
-      />
-    </View>
-  );
+        </View>
+    );
 }
