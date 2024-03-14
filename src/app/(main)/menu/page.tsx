@@ -41,6 +41,8 @@ export default function MainPage() {
         <Appbar.Action onPress={checkSession} icon="account" />
       </Appbar.Header>
       <FlatList
+        refreshing={isLoading}
+        onRefresh={updateDishes}
         ItemSeparatorComponent={() => {
           return (
             <View
