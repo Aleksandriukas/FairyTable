@@ -4,6 +4,7 @@ import { Badge, FAB, useTheme } from "react-native-paper";
 import { useMainContext } from "../MainContext";
 import { useLinkTo } from "../../../../charon";
 import { useSafeAreaInsets } from "react-native-safe-area-context";
+import Animated, { FadeIn, FadeOut } from "react-native-reanimated";
 
 export default function MenuLayout({ children }: PropsWithChildren<{}>) {
   const { colors } = useTheme();
@@ -40,7 +41,9 @@ export default function MenuLayout({ children }: PropsWithChildren<{}>) {
           }}
         >
           {quantity !== 0 && (
-            <Badge
+            <Animated.View
+              entering={FadeIn}
+              exiting={FadeOut}
               style={{
                 position: "absolute",
                 zIndex: 10,
@@ -48,8 +51,8 @@ export default function MenuLayout({ children }: PropsWithChildren<{}>) {
                 right: -8,
               }}
             >
-              {quantity}
-            </Badge>
+              <Badge>{quantity}</Badge>
+            </Animated.View>
           )}
           <FAB
             onPress={() => {
