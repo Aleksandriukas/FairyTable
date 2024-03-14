@@ -73,7 +73,3 @@ export default function AuthPage() {
         </View>
     );
 }
-
-const styles = StyleSheet.create({
-    
-});
