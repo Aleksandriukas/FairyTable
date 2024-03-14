@@ -7,6 +7,7 @@ export const options: Omit<NativeStackNavigatorProps, "children"> = {
     contentStyle: {
       backgroundColor: "transparent",
     },
+    animation: "fade",
   },
 };
 
