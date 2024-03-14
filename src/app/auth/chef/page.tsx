@@ -1,11 +1,10 @@
-import { View } from 'react-native';
+import { Appbar, IconButton, Text, useTheme } from 'react-native-paper';
 import { useLinkTo } from '../../../../charon';
 import { supabase } from '../../../supabase/supabase';
-import { Appbar, IconButton, useTheme } from 'react-native-paper';
+import { View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { useEffect } from 'react';
 
-export default function AdminPage() {
+export default function ChefPage() {
     const { goBack } = useNavigation();
     const linkTo = useLinkTo();
     const { colors } = useTheme();
@@ -20,20 +19,11 @@ export default function AdminPage() {
         }
     }
 
-    
-
     return (
         <View>
             <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
                 <Appbar.BackAction onPress={goBack} />
-                <Appbar.Content title="Admin page" />
-                <IconButton
-                    iconColor={colors.onPrimary}
-                    containerColor={colors.primary}
-                    mode="contained"
-                    onPress={() => {linkTo('/auth/admin/registerChef')}}
-                    icon="script-text-key"
-                />
+                <Appbar.Content title="Chef page" />
                 <IconButton
                     iconColor={colors.onPrimary}
                     containerColor={colors.primary}

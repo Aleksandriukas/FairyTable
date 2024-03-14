@@ -1,12 +1,11 @@
-import { Pressable, Text, FlatList, View } from "react-native";
-import { useEffect, useState } from "react";
-import { DishBean } from "../../../beans/DishBean";
+import { FlatList, View } from "react-native";
+import { useEffect } from "react";
 import { supabase } from "../../../supabase/supabase";
 import { Appbar, useTheme } from "react-native-paper";
 import { useLinkTo } from "../../../../charon";
 import { DishListItem } from "./DishListItem";
 import { useMainContext } from "../MainContext";
-
+import jwtDecode from "jwt-decode";
 export default function MainPage() {
   const linkTo = useLinkTo();
 
@@ -18,20 +17,30 @@ export default function MainPage() {
     updateDishes();
   }, []);
 
+  const checkSession = () => {
+    supabase.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        const jwtEncoded = session.access_token;
+        if (jwtEncoded) {
+          const jwt = jwtDecode(jwtEncoded);
+          const userRole = jwt.user_role;
+          linkTo(`/auth/${userRole}`);
+        } else {
+          linkTo("/auth");
+        }
+      } else {
+        linkTo("/auth");
+      }
+    });
+  };
+
   return (
-    <View style={{ flex: 1 }}>
+    <View>
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
         <Appbar.Content title="Menu" />
-        <Appbar.Action
-          onPress={() => {
-            linkTo("/auth");
-          }}
-          icon="account"
-        />
+        <Appbar.Action onPress={checkSession} icon="account" />
       </Appbar.Header>
       <FlatList
-        refreshing={isLoading}
-        onRefresh={updateDishes}
         ItemSeparatorComponent={() => {
           return (
             <View
