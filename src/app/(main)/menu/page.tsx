@@ -1,4 +1,4 @@
-import { Pressable, Text, FlatList, View } from 'react-native';
+import { FlatList, View } from 'react-native';
 import { useEffect, useState } from 'react';
 import { DishBean } from '../../../beans/DishBean';
 import { supabase } from '../../../supabase/supabase';
@@ -8,18 +8,18 @@ import { DishListItem } from './DishListItem';
 import { jwtDecode } from 'jwt-decode';
 
 export default function MainPage() {
-    const linkTo = useLinkTo();
+  const linkTo = useLinkTo();
 
-    const [dishes, setDishes] = useState<DishBean[] | undefined>(undefined);
+  const [dishes, setDishes] = useState<DishBean[] | undefined>(undefined);
 
-    const { colors } = useTheme();
+  const { colors } = useTheme();
 
-    const fetchDishes = async () => {
-        try {
-            const { data, error } = await supabase.from('Dish').select('*');
-            if (error) {
-                throw error;
-            }
+  const fetchDishes = async () => {
+    try {
+      const { data, error } = await supabase.from("Dish").select("*");
+      if (error) {
+        throw error;
+      }
 
             setDishes(data);
         } catch (e) {
@@ -65,6 +65,6 @@ export default function MainPage() {
                 keyExtractor={(item) => item.id.toString()}
                 data={dishes}
             />
-        </View>
-    );
+    </View>
+  );
 }

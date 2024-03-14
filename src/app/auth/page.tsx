@@ -1,14 +1,12 @@
-import { Pressable, Text, AppState, FlatList, View, StyleSheet } from 'react-native';
+import { View, StyleSheet } from 'react-native';
 import { useLinkTo } from '../../../charon';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { supabase } from '../../supabase/supabase';
-import { Image } from 'react-native-elements';
 import { HelperText, TextInput, Button, Appbar, useTheme } from 'react-native-paper';
 import { jwtDecode } from 'jwt-decode';
-import { Session } from '@supabase/supabase-js';
 import { useNavigation } from '@react-navigation/native';
 
-export default function MainPage() {
+export default function AuthPage() {
     const { colors } = useTheme();
     const { goBack } = useNavigation();
     const linkTo = useLinkTo();
