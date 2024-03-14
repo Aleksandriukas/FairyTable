@@ -8,6 +8,20 @@ import { useNavigation } from "@react-navigation/native";
 import { useMainContext } from "../../../MainContext";
 import { Image } from "react-native-elements";
 import { QuantityPicker } from "../../../../../components";
+import Animated, { withSpring, withTiming } from "react-native-reanimated";
+
+import { SharedTransition } from "react-native-reanimated";
+
+const transition = SharedTransition.custom((values) => {
+  "worklet";
+  return {
+    height: withTiming(values.targetHeight),
+    width: withTiming(values.targetWidth),
+    originX: withTiming(values.targetGlobalOriginX),
+    originY: withTiming(values.targetGlobalOriginY),
+    borderRadius: withTiming(values.targetBorderRadius),
+  };
+});
 
 export default function DishPage() {
   const { dish_id } = useParams();
@@ -46,21 +60,12 @@ export default function DishPage() {
         }}
       >
         <View style={{ flexShrink: 1, gap: 4 }}>
-          <View
-            style={{
-              height: "50%",
-              width: "100%",
-              borderRadius: 24,
-              backgroundColor: colors.primaryContainer,
-            }}
-          >
-            {dish?.photoURL && (
-              <Image
-                style={{ height: "100%", width: "100%", borderRadius: 24 }}
-                source={{ uri: dish?.photoURL }}
-              />
-            )}
-          </View>
+          <Animated.Image
+            sharedTransitionTag={`test${dish?.id}`}
+            sharedTransitionStyle={transition}
+            style={{ height: "50%", width: "100%", borderRadius: 24 }}
+            source={{ uri: dish?.photoURL }}
+          />
           <View style={{ flexShrink: 1, gap: 8 }}>
             <Text style={{ flexShrink: 1 }}>{dish?.description}</Text>
             <Text style={{ alignSelf: "flex-end" }} variant="labelLarge">
