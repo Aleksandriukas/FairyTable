@@ -5,7 +5,7 @@ import { Appbar, useTheme } from "react-native-paper";
 import { useLinkTo } from "../../../../charon";
 import { DishListItem } from "./DishListItem";
 import { useMainContext } from "../MainContext";
-import jwtDecode from "jwt-decode";
+import { jwtDecode } from "jwt-decode";
 export default function MainPage() {
   const linkTo = useLinkTo();
 
