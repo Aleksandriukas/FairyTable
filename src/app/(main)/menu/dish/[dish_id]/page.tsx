@@ -1,34 +1,18 @@
 import { ScrollView, View } from 'react-native';
 import { useParams } from '../../../../../../charon';
 import { Appbar, Button, IconButton, Text, useTheme } from 'react-native-paper';
-import { supabase } from '../../../../../supabase/supabase';
-import { DishBean } from '../../../../../beans/DishBean';
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import { useMainContext } from '../../../MainContext';
-import { Image } from 'react-native-elements';
 import { QuantityPicker } from '../../../../../components';
-import Animated, { withSpring, withTiming } from 'react-native-reanimated';
-
-import { SharedTransition } from 'react-native-reanimated';
-
-const transition = SharedTransition.custom((values) => {
-    'worklet';
-    return {
-        height: withTiming(values.targetHeight),
-        width: withTiming(values.targetWidth),
-        originX: withTiming(values.targetGlobalOriginX),
-        originY: withTiming(values.targetGlobalOriginY),
-        borderRadius: withTiming(values.targetBorderRadius),
-    };
-});
+import Animated from 'react-native-reanimated';
 
 export default function DishPage() {
     const { dish_id } = useParams();
 
     const { colors } = useTheme();
 
-    const { dishes, setCart } = useMainContext();
+    const { dishes, addToCart: setCart } = useMainContext();
 
     const dish = dishes.find((d) => d.id.toString() === dish_id);
 
