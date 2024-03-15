@@ -10,7 +10,8 @@ import { Appbar, Button, Text, useTheme } from "react-native-paper";
 import { useMainContext } from "../MainContext";
 import { CartItem } from "./CartItem";
 import { SafeAreaView } from "react-native-safe-area-context";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
+import { PaymentModal } from "./PaymentModal";
 
 if (Platform.OS === "android") {
   if (UIManager.setLayoutAnimationEnabledExperimental) {
@@ -23,6 +24,8 @@ export default function CartPage() {
   const { colors } = useTheme();
 
   const { cart, deleteSelectedDish } = useMainContext();
+
+  const [isVisible, setIsVisible] = useState(false);
 
   const total = useMemo(() => {
     let t = 0;
@@ -74,10 +77,22 @@ export default function CartPage() {
         }}
       >
         <Text variant="bodyLarge">{`Total: ${total.toFixed(2)} €`}</Text>
-        <Button disabled={cart.length === 0} mode="contained">
+        <Button
+          onPress={() => {
+            setIsVisible(true);
+          }}
+          disabled={cart.length === 0}
+          mode="contained"
+        >
           Apmoketi
         </Button>
       </SafeAreaView>
+      <PaymentModal
+        visible={isVisible}
+        onDismiss={() => {
+          setIsVisible(false);
+        }}
+      />
     </View>
   );
 }
