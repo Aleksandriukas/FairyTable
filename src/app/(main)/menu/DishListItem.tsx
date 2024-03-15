@@ -11,8 +11,6 @@ export type DishListItemProps = {
 const CONTAINER_HEIGHT = 100;
 
 export const DishListItem = ({ data }: DishListItemProps) => {
-    const { colors } = useTheme();
-
     const linkTo = useLinkTo();
 
     return (
