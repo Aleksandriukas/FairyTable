@@ -7,20 +7,30 @@ import {
   MD3LightTheme as DefaultTheme,
 } from 'react-native-paper';
 
-const theme = {
+const green = {
   ...DefaultTheme,
-  // Specify custom property in nested object
   colors: {
     ...DefaultTheme.colors,
-    primary: '#A00000',
-    primaryContainer: '#A00000A0',
+    primaryContainer: 'rgb(181, 177, 140)',
+    primary: 'rgb(96, 104, 63)',
+    surface: 'rgb(248, 241, 223)',
+  },
+};
+
+const pink = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primaryContainer: '#ECB1C4',
+    primary: '#B51A5E',
+    surface: '#FAEEEF',
   },
 };
 
 export default function MainLayout({ children }: PropsWithChildren<{}>) {
   const { colors } = useTheme();
   return (
-    <PaperProvider theme={theme}>
+    <PaperProvider theme={pink}>
 
 
       <SafeAreaProvider>
