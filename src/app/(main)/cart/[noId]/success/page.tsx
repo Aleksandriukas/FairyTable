@@ -22,7 +22,7 @@ export default function SuccessPage() {
                     icon="logout"
                 />
             </Appbar.Header>
-            <Text>Success</Text>
+            <Text>Sėkmingai apmokėta!</Text>
             <ConfirmationDialog
                 visible={visible}
                 onDismiss={() => {
@@ -48,7 +48,7 @@ const ConfirmationDialog = (props: Omit<DialogProps, 'children'>) => {
         <Portal>
             <Dialog {...props}>
                 <Dialog.Content>
-                    <Text>Are you sure to end your session?</Text>
+                    <Text>Ar tikrai norite baigti seansą?</Text>
                 </Dialog.Content>
                 <Dialog.Actions>
                     <Button
@@ -56,9 +56,9 @@ const ConfirmationDialog = (props: Omit<DialogProps, 'children'>) => {
                             props.onDismiss?.();
                         }}
                     >
-                        Cancel
+                        Ne
                     </Button>
-                    <Button onPress={endSession}>Submit</Button>
+                    <Button onPress={endSession}>Taip</Button>
                 </Dialog.Actions>
             </Dialog>
         </Portal>

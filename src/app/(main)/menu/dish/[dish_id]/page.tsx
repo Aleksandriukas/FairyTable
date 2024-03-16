@@ -64,7 +64,7 @@ export default function DishPage() {
                             <View style={{ flexDirection: 'row', alignItems: 'center' }}>
                                 <QuantityPicker quantity={quantity} setQuantity={setQuantity} />
                                 <Button onPress={addToCart} mode="contained">
-                                    Ideti i krepseli
+                                    Įdėti į krepšelį
                                 </Button>
                             </View>
                         </View>
