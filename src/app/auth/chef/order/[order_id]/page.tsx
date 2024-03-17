@@ -1,4 +1,11 @@
-import { Appbar, Button, IconButton, List, useTheme } from "react-native-paper";
+import {
+  Appbar,
+  Button,
+  IconButton,
+  List,
+  SegmentedButtons,
+  useTheme,
+} from "react-native-paper";
 import { useLinkTo } from "../../../../../../charon";
 import { supabase } from "../../../../../supabase/supabase";
 import { FlatList, View } from "react-native";
@@ -7,6 +14,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "../../../../../../charon/src/utils/useParams";
 import OrderItem, { OrderDish } from "./OrderItem";
 import { OrderBean } from "../../../../../beans/OrderBean";
+import { useOrderContext } from "../../OrderContext";
 
 type OrderProduct = {
   productId: number;
@@ -17,14 +25,17 @@ const isOrderDish = (value: any): value is OrderDish =>
   typeof value === "object" && "data" in value && "quantity" in value;
 
 export default function OrderPage() {
-  const [order, setOrder] = useState<OrderBean | undefined>(undefined);
-  const [selectedValue, setSelectedValue] = useState<string | undefined>(
-    undefined
+  const { order, setOrder } = useOrderContext();
+  const { order_id } = useParams();
+
+  const currentOrder = order.find((item) => item.id.toString() === order_id);
+
+  const [selectedValue, setSelectedValue] = useState<string>(
+    currentOrder?.status.toLowerCase() ?? ""
   );
   const [orderProducts, setOrderProducts] = useState<OrderDish[] | undefined>(
     undefined
   );
-  const { order_id } = useParams();
   const { goBack } = useNavigation();
   const linkTo = useLinkTo();
   const { colors } = useTheme();
@@ -34,6 +45,7 @@ export default function OrderPage() {
     changeStatus(value);
   };
 
+  console.log("Order :: ", order);
   const changeStatus = async (value: string) => {
     try {
       const { error } = await supabase
@@ -43,6 +55,14 @@ export default function OrderPage() {
       if (error) {
         throw error;
       }
+      setOrder((old) => {
+        const tempOrder = [...old];
+        const index = tempOrder.findIndex(
+          ({ id }) => id.toString() === order_id
+        );
+        tempOrder[index].status = value;
+        return tempOrder;
+      });
     } catch (e) {
       console.log(e);
     }
@@ -89,24 +109,7 @@ export default function OrderPage() {
     }
   };
 
-  const fetchOrder = async () => {
-    try {
-      const { data, error } = await supabase
-        .from("order")
-        .select("*")
-        .eq("id", order_id);
-      if (error) {
-        throw error;
-      }
-      setOrder(data.at(0));
-      setSelectedValue(data.at(0).status);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
   useEffect(() => {
-    fetchOrder();
     fetchOrderProducts();
   }, []);
 
@@ -125,41 +128,28 @@ export default function OrderPage() {
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title={"Užsakymas " + order_id} />
-        <IconButton
-          iconColor={colors.onPrimary}
-          containerColor={colors.primary}
-          mode="contained"
-          onPress={signOut}
-          icon="exit-to-app"
-        />
+        <Appbar.Action onPress={signOut} icon="exit-to-app" />
       </Appbar.Header>
       <List.Item title="Pasirinkite užsakymo stastusą" />
-      <View
-        style={{
-          flexDirection: "row",
-          justifyContent: "space-between",
-          paddingHorizontal: 10,
-        }}
-      >
-        <Button
-          mode={selectedValue === "paid" ? "contained" : "outlined"}
-          onPress={() => handleOptionPress("paid")}
-        >
-          PAID
-        </Button>
-        <Button
-          mode={selectedValue === "cooking" ? "contained" : "outlined"}
-          onPress={() => handleOptionPress("cooking")}
-        >
-          COOKING
-        </Button>
-        <Button
-          mode={selectedValue === "ready" ? "contained" : "outlined"}
-          onPress={() => handleOptionPress("ready")}
-        >
-          READY
-        </Button>
-      </View>
+      <SegmentedButtons
+        style={{ padding: 12 }}
+        value={selectedValue}
+        onValueChange={handleOptionPress}
+        buttons={[
+          {
+            value: "paid",
+            label: "Paid",
+          },
+          {
+            value: "cooking",
+            label: "Cooking",
+          },
+          {
+            value: "ready",
+            label: "Ready",
+          },
+        ]}
+      />
       <List.Item
         title="Pasirinktas statusas"
         description={selectedValue?.toUpperCase() || "Nė vienas"}

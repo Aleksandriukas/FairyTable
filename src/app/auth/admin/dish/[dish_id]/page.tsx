@@ -1,6 +1,12 @@
 import { ScrollView, View } from "react-native";
 import { useLinkTo, useParams } from "../../../../../../charon";
-import { Appbar, Button, TextInput, useTheme } from "react-native-paper";
+import {
+  Appbar,
+  Button,
+  Surface,
+  TextInput,
+  useTheme,
+} from "react-native-paper";
 import { supabase } from "../../../../../supabase/supabase";
 import { DishBean } from "../../../../../beans/DishBean";
 import { useEffect, useState } from "react";
@@ -76,7 +82,7 @@ export default function DishCRUDPage() {
   const uploadPhoto = async () => {
     try {
       await launchCamera(
-        { mediaType: "photo" },
+        { mediaType: "photo", quality: 0.6 },
         (response: ImagePickerResponse) => {
           if (response.didCancel || response.errorCode) {
             throw new Error("closed camera!");
@@ -153,7 +159,7 @@ export default function DishCRUDPage() {
   };
 
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: colors.surface }}>
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title="Patiekalų redagavimas" />
@@ -163,10 +169,11 @@ export default function DishCRUDPage() {
           paddingTop: 12,
           paddingHorizontal: 12,
           paddingBottom: 128,
+          gap: 8,
         }}
       >
         <TextInput
-          placeholder="Pavadinimas"
+          label="Pavadinimas"
           mode="outlined"
           onChangeText={handleTitleChange}
           value={dish.title}
@@ -174,11 +181,13 @@ export default function DishCRUDPage() {
         <TextInput
           placeholder="Aprašymas"
           mode="outlined"
+          multiline
+          style={{ minHeight: 128 }}
           value={dish.description}
           onChangeText={handleDescriptionChange}
         />
         <TextInput
-          placeholder="Kaina"
+          label="Kaina"
           mode="outlined"
           value={dish.price.toString()}
           onChangeText={handlePriceChange}

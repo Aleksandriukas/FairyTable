@@ -6,28 +6,13 @@ import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { OrderBean } from "../../../beans/OrderBean";
 import OrderListItem from "./OrderListItem";
+import { useOrderContext } from "./OrderContext";
 
 export default function ChefPage() {
-  const [orders, setOrders] = useState<OrderBean[] | undefined>(undefined);
+  const { order } = useOrderContext();
   const { goBack } = useNavigation();
   const linkTo = useLinkTo();
   const { colors } = useTheme();
-
-  const fetchOrders = async () => {
-    try {
-      const { data, error } = await supabase.from("order").select("*");
-      if (error) {
-        throw error;
-      }
-      setOrders(data);
-    } catch (e) {
-      console.log(e);
-    }
-  };
-
-  useEffect(() => {
-    fetchOrders();
-  }, []);
 
   const signOut = async () => {
     try {
@@ -40,17 +25,11 @@ export default function ChefPage() {
   };
 
   return (
-    <View>
+    <View style={{ flex: 1 }}>
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title="Šefo puslapis" />
-        <IconButton
-          iconColor={colors.onPrimary}
-          containerColor={colors.primary}
-          mode="contained"
-          onPress={signOut}
-          icon="exit-to-app"
-        />
+        <Appbar.Action onPress={signOut} icon="exit-to-app" />
       </Appbar.Header>
       <FlatList
         ItemSeparatorComponent={() => {
@@ -64,7 +43,7 @@ export default function ChefPage() {
           <OrderListItem data={item} key={index} />
         )}
         keyExtractor={(item: OrderBean) => item.id.toString()}
-        data={orders}
+        data={order}
       />
     </View>
   );

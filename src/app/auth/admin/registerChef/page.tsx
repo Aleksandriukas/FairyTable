@@ -26,6 +26,8 @@ export default function RegisterChefPage() {
   const linkTo = useLinkTo();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [emailError, setEmailError] = useState<boolean>(false);
+  const [passwordError, setPasswordError] = useState<boolean>(false);
 
   const hasEmailErrors = () => {
     return !email.includes("@");
@@ -72,20 +74,25 @@ export default function RegisterChefPage() {
           value={email}
           mode="outlined"
           onChangeText={onChangeEmail}
+          onBlur={() => {
+            setEmailError(hasEmailErrors());
+          }}
         />
-        <HelperText type="error" visible={hasEmailErrors()}>
-          {hasEmailErrors() ? "El. paštui reikalingas simbolis @!" : ""}
+        <HelperText type="error" visible={emailError}>
+          {"El. paštui reikalingas simbolis @!"}
         </HelperText>
         <TextInput
           label="Slaptažodis"
           value={password}
+          secureTextEntry
           mode="outlined"
           onChangeText={onChangePassword}
+          onBlur={() => {
+            setPasswordError(hasPasswordErrors());
+          }}
         />
-        <HelperText type="error" visible={hasPasswordErrors()}>
-          {hasPasswordErrors()
-            ? "Slaptažodis turi turėti mažiausiai 5 simbolius"
-            : ""}
+        <HelperText type="error" visible={passwordError}>
+          {"Slaptažodis turi turėti mažiausiai 5 simbolius"}
         </HelperText>
 
         <Button

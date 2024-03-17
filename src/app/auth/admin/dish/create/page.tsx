@@ -81,7 +81,7 @@ export default function DishCreatePage() {
   const uploadPhoto = async () => {
     try {
       await launchCamera(
-        { mediaType: "photo" },
+        { mediaType: "photo", quality: 0.6 },
         (response: ImagePickerResponse) => {
           if (response.didCancel || response.errorCode) {
             throw new Error("closed camera!");
@@ -126,7 +126,7 @@ export default function DishCreatePage() {
   };
 
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: colors.surface }}>
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title="Patiekalo sukūrimas" />
@@ -136,27 +136,29 @@ export default function DishCreatePage() {
           paddingTop: 12,
           paddingHorizontal: 12,
           paddingBottom: 128,
+          gap: 8,
         }}
       >
         <TextInput
-          placeholder="Pavadinimas"
+          label="Pavadinimas"
           mode="outlined"
           onChangeText={handleTitleChange}
         />
         <TextInput
           placeholder="Aprašymas"
           mode="outlined"
+          multiline
+          style={{ minHeight: 128 }}
           onChangeText={handleDescriptionChange}
         />
         <TextInput
-          placeholder="Kaina"
+          label="Kaina"
           mode="outlined"
           onChangeText={handlePriceChange}
         />
         <TextInput
           label="Įkelti failą"
           value={fileName ? "Failas įkeltas!" : ""}
-          placeholder="Įkelkite failą"
           editable={false}
         />
         <View

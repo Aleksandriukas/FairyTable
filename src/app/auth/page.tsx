@@ -74,6 +74,7 @@ export default function AuthPage() {
         <TextInput
           mode="outlined"
           label="Slaptažodis"
+          secureTextEntry
           value={password}
           onChangeText={onChangePassword}
         />

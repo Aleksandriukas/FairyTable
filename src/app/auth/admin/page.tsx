@@ -48,29 +48,14 @@ export default function AdminPage() {
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title="Admin" />
-        <IconButton
-          iconColor={colors.onPrimary}
-          containerColor={colors.primary}
-          mode="contained"
-          onPress={createDish}
-          icon="upload"
-        />
-        <IconButton
-          iconColor={colors.onPrimary}
-          containerColor={colors.primary}
-          mode="contained"
+        <Appbar.Action onPress={createDish} icon="upload" />
+        <Appbar.Action
           onPress={() => {
             linkTo("/auth/admin/registerChef");
           }}
           icon="script-text-key"
         />
-        <IconButton
-          iconColor={colors.onPrimary}
-          containerColor={colors.primary}
-          mode="contained"
-          onPress={signOut}
-          icon="exit-to-app"
-        />
+        <Appbar.Action onPress={signOut} icon="exit-to-app" />
       </Appbar.Header>
       <FlatList
         ItemSeparatorComponent={() => {
