@@ -45,15 +45,6 @@ export default function DishCRUDPage() {
     });
   };
 
-  const loadImage = async (filePath: string) => {
-    try {
-      const data = await RNFetchBlob.fs.readFile(filePath, "base64");
-      setFileBlob(data);
-    } catch (error) {
-      console.error("Failed to load image:", error);
-    }
-  };
-
   const fetchDish = async () => {
     try {
       const { data, error } = await supabase
@@ -72,6 +63,15 @@ export default function DishCRUDPage() {
   useEffect(() => {
     fetchDish();
   }, []);
+
+  const loadImage = async (filePath: string) => {
+    try {
+      const data = await RNFetchBlob.fs.readFile(filePath, "base64");
+      setFileBlob(data);
+    } catch (error) {
+      console.error("Failed to load image:", error);
+    }
+  };
 
   const uploadPhoto = async () => {
     try {
@@ -156,7 +156,7 @@ export default function DishCRUDPage() {
     <View>
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
         <Appbar.BackAction onPress={goBack} />
-        <Appbar.Content title={dish?.title} />
+        <Appbar.Content title="Patiekalų redagavimas" />
       </Appbar.Header>
       <ScrollView
         contentContainerStyle={{
@@ -166,50 +166,45 @@ export default function DishCRUDPage() {
         }}
       >
         <TextInput
-          placeholder="Title"
+          placeholder="Pavadinimas"
           mode="outlined"
           onChangeText={handleTitleChange}
           value={dish.title}
         />
         <TextInput
-          placeholder="Description"
+          placeholder="Aprašymas"
           mode="outlined"
           value={dish.description}
           onChangeText={handleDescriptionChange}
         />
         <TextInput
-          placeholder="Price"
+          placeholder="Kaina"
           mode="outlined"
           value={dish.price.toString()}
           onChangeText={handlePriceChange}
         />
         <TextInput
-          label="Upload File"
-          value={fileBlob ? "File uploaded" : ""}
+          label="Įkelti failą"
+          value={fileBlob ? "Failas įkeltas" : ""}
           placeholder="Select a file"
           editable={false}
         />
-        <Button
-          onPress={uploadPhoto}
-          style={{ alignSelf: "flex-end" }}
-          mode="contained"
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-          Įkelti paveikslėlį
-        </Button>
-        <Button
-          onPress={submitUpdate}
-          style={{ alignSelf: "flex-end" }}
-          mode="contained"
-        >
-          Atnaujinti patiekalą
-        </Button>
-        <Button
-          onPress={submitDelete}
-          style={{ alignSelf: "flex-end" }}
-          mode="contained"
-        >
-          Pašalinti patiekalą
-        </Button>
+          <View style={{ height: 10 }}></View>
+          <Button onPress={uploadPhoto} mode="contained">
+            Įkelti paveikslėlį
+          </Button>
+          <View style={{ height: 10 }}></View>
+          <Button onPress={submitUpdate} mode="contained">
+            Atnaujinti patiekalą
+          </Button>
+          <View style={{ height: 10 }}></View>
+          <Button onPress={submitDelete} mode="contained">
+            Pašalinti patiekalą
+          </Button>
+        </View>
       </ScrollView>
     </View>
   );

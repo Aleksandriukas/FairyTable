@@ -129,7 +129,7 @@ export default function DishCreatePage() {
     <View>
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
         <Appbar.BackAction onPress={goBack} />
-        <Appbar.Content title="Patiekalo sukūrimo puslapis" />
+        <Appbar.Content title="Patiekalo sukūrimas" />
       </Appbar.Header>
       <ScrollView
         contentContainerStyle={{
@@ -139,40 +139,38 @@ export default function DishCreatePage() {
         }}
       >
         <TextInput
-          placeholder="Title"
+          placeholder="Pavadinimas"
           mode="outlined"
           onChangeText={handleTitleChange}
         />
         <TextInput
-          placeholder="Description"
+          placeholder="Aprašymas"
           mode="outlined"
           onChangeText={handleDescriptionChange}
         />
         <TextInput
-          placeholder="Price"
+          placeholder="Kaina"
           mode="outlined"
           onChangeText={handlePriceChange}
         />
         <TextInput
-          label="Upload File"
-          value={fileName ? "File uploaded!" : ""}
-          placeholder="Select a file"
+          label="Įkelti failą"
+          value={fileName ? "Failas įkeltas!" : ""}
+          placeholder="Įkelkite failą"
           editable={false}
         />
-        <Button
-          onPress={uploadPhoto}
-          style={{ alignSelf: "flex-end" }}
-          mode="contained"
+        <View
+          style={{ flex: 1, justifyContent: "center", alignItems: "center" }}
         >
-          Pridėti patiekalo paveikslėlį
-        </Button>
-        <Button
-          onPress={submitCreate}
-          style={{ alignSelf: "flex-end" }}
-          mode="contained"
-        >
-          Sukurti patiekalą
-        </Button>
+          <View style={{ height: 10 }}></View>
+          <Button onPress={uploadPhoto} mode="contained">
+            Pridėti patiekalo paveikslėlį
+          </Button>
+          <View style={{ height: 10 }}></View>
+          <Button onPress={submitCreate} mode="contained">
+            Sukurti patiekalą
+          </Button>
+        </View>
       </ScrollView>
     </View>
   );
