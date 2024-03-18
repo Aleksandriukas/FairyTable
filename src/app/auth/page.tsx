@@ -74,6 +74,7 @@ export default function AuthPage() {
         <TextInput
           mode="outlined"
           label="Slaptažodis"
+          secureTextEntry
           value={password}
           onChangeText={onChangePassword}
         />
@@ -81,6 +82,7 @@ export default function AuthPage() {
           {hasPasswordErrors() ? "Slaptažodį turi sudaryti bent 5 simboliai!" : ""}
         </HelperText>
         <Button
+          mode="contained"
           onPress={() => {
             signIn();
           }}
