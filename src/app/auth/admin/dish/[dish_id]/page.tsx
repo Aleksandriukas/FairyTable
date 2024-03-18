@@ -136,6 +136,12 @@ export default function DishCRUDPage() {
           .update({ ...dish, photoURL: newUrl })
           .eq("id", dish_id);
         if (error) throw error;
+      } else {
+        const { data, error } = await supabase
+          .from("Dish")
+          .update(dish)
+          .eq("id", dish_id);
+        if (error) throw error;
       }
     } catch (error) {
       console.log(error);
