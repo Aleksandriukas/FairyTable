@@ -58,6 +58,7 @@ export default function MenuLayout({ children }: PropsWithChildren<{}>) {
             onPress={() => {
               linkTo("/cart");
             }}
+            color={colors.onTertiaryContainer}
             icon="cart"
           />
         </View>
