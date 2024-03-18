@@ -76,12 +76,12 @@ export const PaymentModal = ({ total, onDismiss, ...other }: PaymentModalProps) 
     return (
         <Portal>
             <Dialog onDismiss={onDismiss} {...other}>
-                <Dialog.Title>Payment</Dialog.Title>
+                <Dialog.Title>Mokėjimas</Dialog.Title>
                 <Dialog.ScrollArea style={{ maxHeight: 128 }}>
                     <FlatList data={data} renderItem={({ item }) => <RenderItem data={item} />} />
                 </Dialog.ScrollArea>
                 <Dialog.Content>
-                    <Text style={{ textAlign: 'right' }}>{`Total: ${total.toFixed(2)} €`}</Text>
+                    <Text style={{ textAlign: 'right' }}>{`Suma: ${total.toFixed(2)} €`}</Text>
                 </Dialog.Content>
                 <Dialog.Actions>
                     {isLoading ? (

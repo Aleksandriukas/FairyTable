@@ -52,7 +52,7 @@ export default function AuthPage() {
     <View style={{ flex: 1, backgroundColor: colors.surface }}>
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
         <Appbar.BackAction onPress={goBack} />
-        <Appbar.Content title="Autentifikacija" />
+        <Appbar.Content title="Prisijungimas" />
       </Appbar.Header>
       <View
         style={{
@@ -64,12 +64,12 @@ export default function AuthPage() {
       >
         <TextInput
           mode="outlined"
-          label="El. paštas"
+          label="Paštas"
           value={email}
           onChangeText={onChangeEmail}
         />
         <HelperText type="error" visible={hasEmailErrors()}>
-          {hasEmailErrors() ? "El. paštui reikalingas simbolis @!" : ""}
+          {hasEmailErrors() ? "Pašte turi būti @ simbolis!" : ""}
         </HelperText>
         <TextInput
           mode="outlined"
@@ -79,9 +79,7 @@ export default function AuthPage() {
           onChangeText={onChangePassword}
         />
         <HelperText type="error" visible={hasPasswordErrors()}>
-          {hasPasswordErrors()
-            ? "Slaptažodis turi turėti mažiausiai 5 simbolius"
-            : ""}
+          {hasPasswordErrors() ? "Slaptažodį turi sudaryti bent 5 simboliai!" : ""}
         </HelperText>
         <Button
           mode="contained"

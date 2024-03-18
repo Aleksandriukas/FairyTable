@@ -39,7 +39,7 @@ export default function CartPage() {
         <View style={{ flex: 1, backgroundColor: colors.surface }}>
             <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
                 <Appbar.BackAction onPress={goBack} />
-                <Appbar.Content title="Cart" />
+                <Appbar.Content title="Krepšelis " />
             </Appbar.Header>
             <FlatList
                 ItemSeparatorComponent={() => {
@@ -66,7 +66,7 @@ export default function CartPage() {
                     gap: 16,
                 }}
             >
-                <Text variant="bodyLarge">{`Total: ${total.toFixed(2)} €`}</Text>
+                <Text variant="bodyLarge">{`Suma: ${total.toFixed(2)} €`}</Text>
                 <Button
                     onPress={() => {
                         setIsVisible(true);
@@ -74,7 +74,7 @@ export default function CartPage() {
                     disabled={cart.length === 0}
                     mode="contained"
                 >
-                    Apmoketi
+                    Apmokėti
                 </Button>
             </SafeAreaView>
             <PaymentModal

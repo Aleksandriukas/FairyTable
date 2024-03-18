@@ -37,7 +37,7 @@ export default function MainPage() {
   return (
     <View style={{ flex: 1, backgroundColor: colors.surface }}>
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
-        <Appbar.Content title="Menu" />
+        <Appbar.Content title="Meniu" />
         <Appbar.Action onPress={checkSession} icon="account" />
       </Appbar.Header>
       <FlatList
