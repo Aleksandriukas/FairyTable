@@ -69,6 +69,8 @@ export default function AuthPage() {
         password: password,
       });
       const jwtEncoded = data.session?.access_token;
+      console.log(JSON.stringify(data));
+      console.log(JSON.stringify(error));
       if (jwtEncoded) {
         const jwt = jwtDecode(jwtEncoded);
         const userRole = jwt.user_role;
