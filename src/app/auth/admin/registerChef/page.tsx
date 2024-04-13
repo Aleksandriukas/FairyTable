@@ -26,20 +26,49 @@ export default function RegisterChefPage() {
   const linkTo = useLinkTo();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [emailError, setEmailError] = useState<boolean>(false);
-  const [passwordError, setPasswordError] = useState<boolean>(false);
+  const [errorEmailEmpty, setErrorEmailEmpty] = useState<boolean>(false);
+  const [errorPasswordEmpty, setErrorPasswordEmpty] = useState<boolean>(false);
+  const [errorEmailFormat, setErrorEmailFormat] = useState<boolean>(false);
+  const [errorPasswordFormat, setErrorPasswordFormat] =
+    useState<boolean>(false);
 
-  const hasEmailErrors = () => {
-    return !email.includes("@");
+  const hasErrorEmailFormat = (email: string) => {
+    const re =
+      /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i;
+    return !email.match(re);
   };
 
-  const hasPasswordErrors = () => {
-    return password.length < 6;
+  const hasErrorPasswordFormat = (password: string) => {
+    return password.length < 5;
   };
 
-  const onChangeEmail = (email: string) => setEmail(email);
+  const onChangeEmail = (email: string) => {
+    setEmail(email);
+    if (email.length === 0) {
+      setErrorEmailEmpty(true);
+    } else {
+      setErrorEmailEmpty(false);
+    }
+    if (hasErrorEmailFormat(email)) {
+      setErrorEmailFormat(true);
+    } else {
+      setErrorEmailFormat(false);
+    }
+  };
 
-  const onChangePassword = (password: string) => setPassword(password);
+  const onChangePassword = (password: string) => {
+    setPassword(password);
+    if (password.length === 0) {
+      setErrorPasswordEmpty(true);
+    } else {
+      setErrorPasswordEmpty(false);
+    }
+    if (hasErrorPasswordFormat(password)) {
+      setErrorPasswordFormat(true);
+    } else {
+      setErrorPasswordFormat(false);
+    }
+  };
 
   const register = async () => {
     try {
@@ -74,12 +103,13 @@ export default function RegisterChefPage() {
           value={email}
           mode="outlined"
           onChangeText={onChangeEmail}
-          onBlur={() => {
-            setEmailError(hasEmailErrors());
-          }}
         />
-        <HelperText type="error" visible={emailError}>
-          {"El. paštui reikalingas simbolis @!"}
+        <HelperText type="error" visible={errorEmailFormat || errorEmailEmpty}>
+          {errorEmailEmpty
+            ? "El. paštas yra reikalingas"
+            : errorEmailFormat
+            ? "El. paštas turi būti x@x.xx formato"
+            : ""}
         </HelperText>
         <TextInput
           label="Slaptažodis"
@@ -87,12 +117,16 @@ export default function RegisterChefPage() {
           secureTextEntry
           mode="outlined"
           onChangeText={onChangePassword}
-          onBlur={() => {
-            setPasswordError(hasPasswordErrors());
-          }}
         />
-        <HelperText type="error" visible={passwordError}>
-          {"Slaptažodis turi turėti mažiausiai 5 simbolius"}
+        <HelperText
+          type="error"
+          visible={errorPasswordFormat || errorPasswordEmpty}
+        >
+          {errorPasswordEmpty
+            ? "Slaptažodis yra reikalingas"
+            : errorPasswordFormat
+            ? "Slaptažodis turi turėti daugiau negu 5 simbolių"
+            : ""}
         </HelperText>
 
         <Button
