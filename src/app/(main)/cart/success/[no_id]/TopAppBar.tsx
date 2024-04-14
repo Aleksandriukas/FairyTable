@@ -1,20 +1,24 @@
+import { PropsWithChildren, useState } from 'react';
 import { View } from 'react-native';
-import { Appbar, DialogProps, Portal, Text, useTheme, Dialog, Button } from 'react-native-paper';
-import { useMainContext } from '../../../MainContext';
+import { Appbar, Button, Dialog, DialogProps, Portal, Text, useTheme } from 'react-native-paper';
 import { useLinkTo, useParams } from '../../../../../../charon';
-import { useState } from 'react';
+import { useMainContext } from '../../../MainContext';
+import { useNavigation } from '@react-navigation/native';
 
-export default function SuccessPage() {
-    const { colors } = useTheme();
-
+export const TopAppBar = ({ hasGoBack = false }: { hasGoBack?: boolean }) => {
     const [visible, setVisible] = useState(false);
 
-    const { noId } = useParams();
+    const { colors } = useTheme();
+
+    const { no_id } = useParams();
+
+    const { goBack } = useNavigation();
 
     return (
-        <View style={{ flex: 1, backgroundColor: colors.surface }}>
+        <>
             <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
-                <Appbar.Content title={`No:. ${noId}`} />
+                {hasGoBack && <Appbar.BackAction onPress={goBack} />}
+                <Appbar.Content title={`No:. ${no_id}`} />
                 <Appbar.Action
                     onPress={() => {
                         setVisible(true);
@@ -22,16 +26,10 @@ export default function SuccessPage() {
                     icon="logout"
                 />
             </Appbar.Header>
-            <Text>Sėkmingai apmokėta!</Text>
-            <ConfirmationDialog
-                visible={visible}
-                onDismiss={() => {
-                    setVisible(false);
-                }}
-            />
-        </View>
+            <ConfirmationDialog visible={visible} onDismiss={() => setVisible(false)} />
+        </>
     );
-}
+};
 
 const ConfirmationDialog = (props: Omit<DialogProps, 'children'>) => {
     const { deleteCart } = useMainContext();
