@@ -3,7 +3,6 @@ import React from "react";
 
 import renderer from "react-test-renderer";
 import OrderItem from "../src/app/auth/chef/order/[order_id]/OrderItem";
-import OrderListItem from "../src/app/auth/chef/OrderListItem";
 import { supabase } from "../src/supabase/supabase";
 
 describe("Order item component", () => {
@@ -22,10 +21,8 @@ describe("Order item component", () => {
     );
   });
 
-  test("fetch orders", () => {
-    const fetchOrders = async () => {
-      const { data, error } = await supabase.from("order").select("*");
-      expect(error).toBeUndefined();
-    };
+  test("fetch orders", async () => {
+    const { error } = await supabase.from("order").select("*");
+    expect(error).toBeNull();
   });
 });
