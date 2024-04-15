@@ -177,6 +177,7 @@ export default function ChatPage({ children }: PropsWithChildren<{}>) {
         }}
       >
         <TextInput
+          testID="input"
           value={message}
           onChangeText={setMessage}
           mode="outlined"
@@ -245,6 +246,7 @@ const ChatItem = ({
           </Text>
         )}
         <Text
+          testID="message"
           style={{
             backgroundColor: isSameId
               ? colors.primary

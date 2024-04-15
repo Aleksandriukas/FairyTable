@@ -1,0 +1,36 @@
+appId: 1
+---
+- tapOn:
+    id: "FairyTable"
+- tapOn:
+    id: "0"
+- tapOn:
+    id: "button"
+- tapOn:
+    id: "fab-content"
+- tapOn: "Apmokėti"
+- tapOn: "Apmoketi"
+- evalScript: ${output.counter = 0}
+- repeat:
+    while:
+      true: ${output.counter < 4}
+    commands:
+      - tapOn:
+          id: "No:.${output.counter+1}"
+      - tapOn:
+          id: "text-input-outline"
+      - inputRandomText
+      - copyTextFrom:
+          id: "input"
+      - tapOn:
+          id: "icon-button"
+          index: 1
+      - extendedWaitUntil:
+          visible:
+            text: ${maestro.copiedText}
+            id: "message"
+          timeout: 1000
+      - tapOn:
+          id: "icon-button"
+          index: 0
+      - evalScript: ${output.counter = output.counter + 1}

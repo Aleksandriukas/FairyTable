@@ -48,6 +48,7 @@ export default function AdminPage() {
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title="Admin" />
+        <Appbar.Action onPress={fetchDishes} icon="reload" />
         <Appbar.Action onPress={createDish} icon="upload" />
         <Appbar.Action
           onPress={() => {
@@ -58,6 +59,7 @@ export default function AdminPage() {
         <Appbar.Action onPress={signOut} icon="exit-to-app" />
       </Appbar.Header>
       <FlatList
+        contentContainerStyle={{ height: "100%" }}
         ItemSeparatorComponent={() => {
           return (
             <View

@@ -16,7 +16,7 @@ export type DishCreateBean = {
   title: string;
   description: string;
   price: number;
-  photoURL: string;
+  photoURL: string | null;
 };
 
 export default function DishCreatePage() {
@@ -29,7 +29,7 @@ export default function DishCreatePage() {
     title: "",
     description: "",
     price: 0,
-    photoURL: "",
+    photoURL: null,
   });
 
   const submitCreate = async () => {
@@ -40,6 +40,10 @@ export default function DishCreatePage() {
         const { data, error } = await supabase
           .from("Dish")
           .insert({ ...newData, photoURL: newUrl });
+      } else {
+        const { data, error } = await supabase
+          .from("Dish")
+          .insert({ ...newData });
       }
     } catch (error) {
       console.log(error);
