@@ -1,0 +1,45 @@
+appId: 1
+---
+- tapOn:
+    id: "FairyTable"
+- tapOn:
+    id: "0"
+- tapOn:
+    id: "icon-button"
+    index: 2
+- tapOn:
+    id: "icon-button"
+    index: 1
+- tapOn:
+    id: "button"
+- tapOn:
+    id: "fab-content"
+- tapOn: "Apmokėti"
+- tapOn: "Apmoketi"
+- copyTextFrom:
+    id: "appbar-content-title-text"
+- tapOn:
+    id: "icon-button"
+- tapOn:
+    id: "button"
+    index: 1
+- tapOn:
+    id: "icon-button"
+- tapOn:
+    id: "text-input-outlined"
+    index: 0
+- inputText: "maestroChef@gmail.com"
+- tapOn:
+    id: "text-input-outlined"
+    index: 1
+- inputText: "maestro"
+- tapOn: "Prisijungti"
+- scrollUntilVisible:
+    element: ${maestro.copiedText}
+    direction: DOWN
+- tapOn: ${maestro.copiedText}
+- tapOn: "Cooking"
+- tapOn: "Ready"
+- tapOn:
+    id: "icon-button"
+    index: 1
