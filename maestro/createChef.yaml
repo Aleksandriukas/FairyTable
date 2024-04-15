@@ -28,6 +28,10 @@ appId: 1
     index: 1
 - inputText: "maestro"
 - tapOn:
+    id: "Return"
+- tapOn:
+    id: "button"
+- tapOn:
     id: "icon-button"
 - tapOn:
     id: "icon-button"
@@ -39,8 +43,13 @@ appId: 1
     index: 0
 - inputText: ${maestro.copiedText}
 - tapOn:
+    id: "Return"
+- tapOn:
     id: "text-input-outlined"
     index: 1
 - inputText: "maestro"
 - tapOn:
+    id: "Return"
+- tapOn:
     id: "button"
+- assertVisible: "Šefo puslapis"
