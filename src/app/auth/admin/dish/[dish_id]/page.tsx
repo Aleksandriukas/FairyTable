@@ -11,7 +11,11 @@ import { supabase } from "../../../../../supabase/supabase";
 import { DishBean } from "../../../../../beans/DishBean";
 import { useEffect, useState } from "react";
 import { useNavigation } from "@react-navigation/native";
-import { ImagePickerResponse, launchCamera } from "react-native-image-picker";
+import {
+  ImagePickerResponse,
+  launchCamera,
+  launchImageLibrary,
+} from "react-native-image-picker";
 import RNFetchBlob from "rn-fetch-blob";
 import { decode } from "base64-arraybuffer";
 
@@ -87,6 +91,23 @@ export default function DishCRUDPage() {
           if (response.didCancel || response.errorCode) {
             throw new Error("closed camera!");
           }
+          const uri = response.assets?.at(0)?.uri;
+          if (uri) loadImage(uri);
+
+          const fileName = response.assets?.at(0)?.fileName;
+          setFileName(fileName);
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const uploadPhotoFromGallery = async () => {
+    try {
+      await launchImageLibrary(
+        { mediaType: "photo", quality: 0.6 },
+        (response: ImagePickerResponse) => {
           const uri = response.assets?.at(0)?.uri;
           if (uri) loadImage(uri);
 
@@ -210,6 +231,10 @@ export default function DishCRUDPage() {
           <View style={{ height: 10 }}></View>
           <Button onPress={uploadPhoto} mode="contained">
             Įkelti paveikslėlį
+          </Button>
+          <View style={{ height: 10 }}></View>
+          <Button onPress={uploadPhotoFromGallery} mode="contained">
+            Įkelti paveikslėlį per galeriją
           </Button>
           <View style={{ height: 10 }}></View>
           <Button onPress={submitUpdate} mode="contained">

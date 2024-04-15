@@ -98,6 +98,23 @@ export default function DishCreatePage() {
     }
   };
 
+  const uploadPhotoFromGallery = async () => {
+    try {
+      await launchImageLibrary(
+        { mediaType: "photo", quality: 0.6 },
+        (response: ImagePickerResponse) => {
+          const uri = response.assets?.at(0)?.uri;
+          if (uri) loadImage(uri);
+
+          const fileName = response.assets?.at(0)?.fileName;
+          setFileName(fileName);
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const uploadImage = async (fileName: string) => {
     try {
       if (fileBlob) {
@@ -167,6 +184,10 @@ export default function DishCreatePage() {
           <View style={{ height: 10 }}></View>
           <Button onPress={uploadPhoto} mode="contained">
             Pridėti patiekalo paveikslėlį
+          </Button>
+          <View style={{ height: 10 }}></View>
+          <Button onPress={uploadPhotoFromGallery} mode="contained">
+            Pridėti patiekalo paveikslėlį iš galerijos
           </Button>
           <View style={{ height: 10 }}></View>
           <Button onPress={submitCreate} mode="contained">
