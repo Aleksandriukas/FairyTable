@@ -1,17 +1,19 @@
 import { FlatList, View } from "react-native";
 import { useLinkTo } from "../../../../charon";
 import { supabase } from "../../../supabase/supabase";
-import { Appbar, IconButton, useTheme } from "react-native-paper";
+import { Appbar, HelperText, IconButton, useTheme } from "react-native-paper";
 import { useNavigation } from "@react-navigation/native";
 import { useEffect, useState } from "react";
 import { DishBean } from "../../../beans/DishBean";
 import { DishCRUDListItem } from "./DishCRUDListItem";
+import { PostgrestError } from "@supabase/supabase-js";
 
 export default function AdminPage() {
   const { goBack } = useNavigation();
   const linkTo = useLinkTo();
   const { colors } = useTheme();
   const [dishes, setDishes] = useState<DishBean[] | undefined>(undefined);
+  const [errorFetching, setErrorFetching] = useState("");
 
   const fetchDishes = async () => {
     try {
@@ -19,10 +21,9 @@ export default function AdminPage() {
       if (error) {
         throw error;
       }
-
       setDishes(data);
     } catch (e) {
-      console.log(e);
+      setErrorFetching("Nėra duomenų");
     }
   };
   useEffect(() => {
@@ -44,7 +45,7 @@ export default function AdminPage() {
   };
 
   return (
-    <View>
+    <View style={{ flex: 1, backgroundColor: colors.surface }}>
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title="Admin" />
@@ -73,6 +74,12 @@ export default function AdminPage() {
         keyExtractor={(item) => item.id.toString()}
         data={dishes}
       />
+      <HelperText
+        type="error"
+        visible={errorFetching.length === 0 ? true : false}
+      >
+        {errorFetching}
+      </HelperText>
     </View>
   );
 }

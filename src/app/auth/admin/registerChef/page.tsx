@@ -19,6 +19,7 @@ import {
 } from "react-native-paper";
 import { jwtDecode } from "jwt-decode";
 import { useNavigation } from "@react-navigation/native";
+import { AuthError } from "@supabase/supabase-js";
 
 export default function RegisterChefPage() {
   const { colors } = useTheme();
@@ -31,6 +32,8 @@ export default function RegisterChefPage() {
   const [errorEmailFormat, setErrorEmailFormat] = useState<boolean>(false);
   const [errorPasswordFormat, setErrorPasswordFormat] =
     useState<boolean>(false);
+  const [errorSigningUp, setErrorSigningUp] = useState<string>("");
+  const [succesSignUp, setSuccessSignUp] = useState<boolean>(false);
 
   const hasErrorEmailFormat = (email: string) => {
     const re =
@@ -39,7 +42,7 @@ export default function RegisterChefPage() {
   };
 
   const hasErrorPasswordFormat = (password: string) => {
-    return password.length < 5;
+    return password.length < 6;
   };
 
   const onChangeEmail = (email: string) => {
@@ -71,6 +74,16 @@ export default function RegisterChefPage() {
   };
 
   const register = async () => {
+    if (
+      errorEmailEmpty ||
+      errorEmailFormat ||
+      errorPasswordEmpty ||
+      errorPasswordFormat
+    ) {
+      return;
+    }
+    setErrorSigningUp("");
+    setSuccessSignUp(false);
     try {
       const { error } = await supabase.auth.signUp({
         email: email,
@@ -79,8 +92,15 @@ export default function RegisterChefPage() {
       if (error) {
         throw error;
       }
+      setSuccessSignUp(true);
     } catch (error) {
-      console.log(error);
+      if (error instanceof AuthError) {
+        if (error.message === "User already registered") {
+          setErrorSigningUp("Naudotojas su šitu el. paštu jau egzistuoja");
+        } else {
+          setErrorSigningUp(error.message);
+        }
+      }
     }
   };
 
@@ -125,7 +145,7 @@ export default function RegisterChefPage() {
           {errorPasswordEmpty
             ? "Slaptažodis yra reikalingas"
             : errorPasswordFormat
-            ? "Slaptažodis turi turėti daugiau negu 5 simbolių"
+            ? "Slaptažodis turi turėti daugiau negu 6 simbolių"
             : ""}
         </HelperText>
 
@@ -137,6 +157,12 @@ export default function RegisterChefPage() {
         >
           Užregistruoti šefą
         </Button>
+        <HelperText
+          type={succesSignUp ? "info" : "error"}
+          visible={errorSigningUp.length !== 0 || succesSignUp ? true : false}
+        >
+          {succesSignUp ? "Sėkmingai užregistruotas" : errorSigningUp}
+        </HelperText>
       </View>
     </View>
   );

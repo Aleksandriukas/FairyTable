@@ -45,7 +45,6 @@ export default function OrderPage() {
     changeStatus(value);
   };
 
-  console.log("Order :: ", order);
   const changeStatus = async (value: string) => {
     try {
       const { error } = await supabase

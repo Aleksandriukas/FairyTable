@@ -24,7 +24,7 @@ export default function ChefPage() {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: colors.surface }}>
       <Appbar.Header style={{ backgroundColor: colors.primaryContainer }}>
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title="Šefo puslapis" />

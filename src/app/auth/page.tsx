@@ -23,6 +23,7 @@ export default function AuthPage() {
   const [errorEmailFormat, setErrorEmailFormat] = useState<boolean>(false);
   const [errorPasswordFormat, setErrorPasswordFormat] =
     useState<boolean>(false);
+  const [errorSigningIn, setErrorSigningIn] = useState<boolean>(false);
 
   const hasErrorEmailFormat = (email: string) => {
     const re =
@@ -31,7 +32,7 @@ export default function AuthPage() {
   };
 
   const hasErrorPasswordFormat = (password: string) => {
-    return password.length < 5;
+    return password.length < 6;
   };
 
   const onChangeEmail = (email: string) => {
@@ -63,11 +64,21 @@ export default function AuthPage() {
   };
 
   const signIn = async () => {
+    if (
+      errorEmailEmpty ||
+      errorEmailFormat ||
+      errorPasswordEmpty ||
+      errorPasswordFormat
+    ) {
+      return;
+    }
+    setErrorSigningIn(false);
     try {
       const { data, error } = await supabase.auth.signInWithPassword({
         email: email,
         password: password,
       });
+      if (error) throw error;
       const jwtEncoded = data.session?.access_token;
       if (jwtEncoded) {
         const jwt = jwtDecode(jwtEncoded);
@@ -75,7 +86,7 @@ export default function AuthPage() {
         linkTo(`/auth/${userRole}`);
       }
     } catch (error) {
-      console.log(error);
+      setErrorSigningIn(true);
     }
   };
 
@@ -121,7 +132,7 @@ export default function AuthPage() {
           {errorPasswordEmpty
             ? "Slaptažodis yra reikalingas"
             : errorPasswordFormat
-            ? "Slaptažodis turi turėti daugiau negu 5 simbolių"
+            ? "Slaptažodis turi turėti daugiau negu 6 simbolių"
             : ""}
         </HelperText>
         <Button
@@ -132,6 +143,9 @@ export default function AuthPage() {
         >
           Prisijungti
         </Button>
+        <HelperText type="error" visible={errorSigningIn}>
+          {errorSigningIn ? "Įvesti neteisingi duomenys" : ""}
+        </HelperText>
       </KeyboardAvoidingView>
     </View>
   );
