@@ -30,9 +30,13 @@ appId: 1
     index: 0
 - inputText: "maestroChef@gmail.com"
 - tapOn:
+    id: "Return"
+- tapOn:
     id: "text-input-outlined"
     index: 1
 - inputText: "maestro"
+- tapOn:
+    id: "Return"
 - tapOn: "Prisijungti"
 - scrollUntilVisible:
     element: ${maestro.copiedText}
