@@ -5,13 +5,16 @@ import { useLinkTo } from "../../../../charon";
 
 export type OrderListItem = {
   data: OrderBean;
+  testID: string;
 };
 
-export default function OrderListItem({ data }: OrderListItem) {
+export default function OrderListItem({ data, testID }: OrderListItem) {
   const linkTo = useLinkTo();
 
   return (
     <TouchableRipple
+      aria-label={`No:. ${data.id}`}
+      testID={testID}
       onPress={() => {
         linkTo(`/auth/chef/order/${data.id}`);
       }}

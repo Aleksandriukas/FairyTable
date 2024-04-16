@@ -1,0 +1,55 @@
+appId: 1
+---
+- tapOn:
+    id: "FairyTable"
+- tapOn:
+    id: "icon-button"
+- tapOn:
+    id: "text-input-outlined"
+    index: 0
+- inputText: "maestroAdmin@gmail.com"
+- tapOn:
+    id: "text-input-outlined"
+    index: 1
+- inputText: "maestro"
+- tapOn: "Prisijungti"
+- tapOn:
+    id: "icon-button"
+    index: 3
+- tapOn:
+    id: "text-input-outlined"
+    index: 0
+- inputRandomEmail
+- copyTextFrom:
+    id: "text-input-outlined"
+    index: 0
+- tapOn:
+    id: "text-input-outlined"
+    index: 1
+- inputText: "maestro"
+- tapOn:
+    id: "Return"
+- tapOn:
+    id: "button"
+- tapOn:
+    id: "icon-button"
+- tapOn:
+    id: "icon-button"
+    index: 4
+- tapOn:
+    id: "icon-button"
+- tapOn:
+    id: "text-input-outlined"
+    index: 0
+- inputText: ${maestro.copiedText}
+- tapOn:
+    id: "Return"
+- tapOn:
+    id: "text-input-outlined"
+    index: 1
+- inputText: "maestro"
+- tapOn:
+    id: "Return"
+- tapOn:
+    id: "button"
+- assertVisible: "Šefo puslapis"

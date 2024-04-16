@@ -1,4 +1,4 @@
-import { View, StyleSheet } from "react-native";
+import { View, StyleSheet, Platform, KeyboardAvoidingView } from "react-native";
 import { useLinkTo } from "../../../charon";
 import { useState } from "react";
 import { supabase } from "../../supabase/supabase";
@@ -96,7 +96,8 @@ export default function AuthPage() {
         <Appbar.BackAction onPress={goBack} />
         <Appbar.Content title="Prisijungimas" />
       </Appbar.Header>
-      <View
+      <KeyboardAvoidingView
+        behavior={Platform.OS === "ios" ? "padding" : "height"}
         style={{
           justifyContent: "center",
           alignContent: "center",
@@ -145,7 +146,7 @@ export default function AuthPage() {
         <HelperText type="error" visible={errorSigningIn}>
           {errorSigningIn ? "Įvesti neteisingi duomenys" : ""}
         </HelperText>
-      </View>
+      </KeyboardAvoidingView>
     </View>
   );
 }

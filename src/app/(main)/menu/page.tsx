@@ -51,7 +51,7 @@ export default function MainPage() {
           );
         }}
         renderItem={({ item, index }) => (
-          <DishListItem data={item} key={index} />
+          <DishListItem id={index.toString()} data={item} key={index} />
         )}
         keyExtractor={(item) => item.id.toString()}
         data={dishes}

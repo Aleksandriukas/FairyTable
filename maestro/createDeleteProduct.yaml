@@ -1,0 +1,52 @@
+appId: 1
+---
+- tapOn:
+    id: "FairyTable"
+- tapOn:
+    id: "icon-button"
+- tapOn:
+    id: "text-input-outlined"
+    index: 0
+- inputText: "maestroAdmin@gmail.com"
+- tapOn:
+    id: "text-input-outlined"
+    index: 1
+- inputText: "maestro"
+- tapOn: "Prisijungti"
+- tapOn:
+    id: "icon-button"
+    index: 2
+- tapOn:
+    id: "text-input-outlined"
+    index: 0
+- inputText: "Test Product"
+- tapOn:
+    id: "text-input-outlined"
+    index: 2
+- inputRandomNumber
+- tapOn:
+    id: "Return"
+- tapOn:
+    id: "button"
+    index: 1
+- tapOn:
+    id: "icon-button"
+    index: 1
+- scrollUntilVisible:
+    element:
+      id: "Test Product"
+    direction: DOWN
+- tapOn:
+    id: "Test Product"
+- tapOn:
+    id: "button"
+    index: 2
+- tapOn:
+    id: "icon-button"
+    index: 1
+- assertNotVisible: "Test Product"
+- scroll
+- assertNotVisible: "Test Product"
+- tapOn:
+    id: "icon-button"
+    index: 4

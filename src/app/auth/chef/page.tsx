@@ -1,9 +1,8 @@
-import { Appbar, IconButton, Text, useTheme } from "react-native-paper";
+import { Appbar, useTheme } from "react-native-paper";
 import { useLinkTo } from "../../../../charon";
 import { supabase } from "../../../supabase/supabase";
 import { FlatList, View } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { useEffect, useState } from "react";
 import { OrderBean } from "../../../beans/OrderBean";
 import OrderListItem from "./OrderListItem";
 import { useOrderContext } from "./OrderContext";
@@ -40,7 +39,7 @@ export default function ChefPage() {
           );
         }}
         renderItem={({ item, index }) => (
-          <OrderListItem data={item} key={index} />
+          <OrderListItem testID={index.toString()} data={item} key={index} />
         )}
         keyExtractor={(item: OrderBean) => item.id.toString()}
         data={order}
