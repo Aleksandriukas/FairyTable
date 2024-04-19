@@ -1,0 +1,24 @@
+name: Run tests
+run-name: ${{ github.actor }} is running tests on React Native "Fairy Table" application.
+on: [push]
+jobs:
+  test-unit-integration-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "The job was triggered by a ${{ github.event_name }} event."
+      - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
+      - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
+      - name: Check out branch code
+        uses: actions/checkout@v4
+      - run: echo "The ${{ github.repository }} repository has been cloned to the runner."
+      - run: echo "The workflow is now ready to test your code on the runner."
+      - name: Install NPM dependencies
+        run: npm install
+      - name: Run Unit/Integration tests and log results
+        run: filename="test-results-$(date +'%Y-%m-%d_%H-%M').txt" && npm test | tee $filename.txt
+        continue-on-error: true
+      - name: Upload test results
+        uses: actions/upload-artifact@v4
+        with:
+          name: test-results
+          path: $filename
