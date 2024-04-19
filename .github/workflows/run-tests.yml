@@ -5,9 +5,9 @@ jobs:
   test-unit-integration-tests:
     runs-on: ubuntu-latest
     steps:
-      - run: echo "NOW=$(date +'%Y-%m-%d_%H:%M')" >> $GITHUB_ENV
+      - run: echo "filename=test_$(date +'%Y-%m-%d_%H:%M').txt" >> $GITHUB_ENV
       - run: echo "The job was triggered by a ${{ github.event_name }} event."
-      - run: echo $NOW
+      - run: echo $filename
       - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out branch code
@@ -17,10 +17,10 @@ jobs:
       - name: Install NPM dependencies
         run: npm install
       - name: Run Unit/Integration tests and log results
-        run: npm test > test-result-$NOW.txt
+        run: npm test > $filename
         continue-on-error: true
       - name: Upload test results
         uses: actions/upload-artifact@v4
         with:
           name: test-results
-          path: ${{ runner.workspace }}/$test-result-$NOW
+          path: ${{ runner.workspace }}/$filename
