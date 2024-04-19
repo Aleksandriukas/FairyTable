@@ -7,6 +7,7 @@ jobs:
     steps:
       - run: echo "NOW=$(date +'%Y-%m-%d_%H:%M')" >> $GITHUB_ENV
       - run: echo "The job was triggered by a ${{ github.event_name }} event."
+      - run: echo $NOW
       - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out branch code
