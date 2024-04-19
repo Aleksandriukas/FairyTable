@@ -5,6 +5,9 @@
 import { AppRegistry } from 'react-native';
 import { name as appName } from './app.json';
 import { Router } from './charon';
+import { decode } from 'base-64'
+
+global.atob = decode
 
 const context = require.context(
     './src/app',
@@ -14,7 +17,9 @@ const context = require.context(
 );
 
 export default function App() {
-    return <Router context={context} linking={{}} />;
+    return (
+        <Router context={context} linking={{ prefixes: ['FairyTable://'], getInitialURL: () => 'FairyTable://menu' }} />
+    );
 }
 
 AppRegistry.registerComponent(appName, () => App);
