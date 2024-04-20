@@ -1,16 +1,11 @@
-name: Run tests and build
+name: Run tests
 run-name: ${{ github.actor }} is running tests and builds on React Native "Fairy Table" application.
-on:
-  pull_request:
-    branches:
-      - master
-      - development
+on: [push]
 jobs:
   run-test-build:
     runs-on: ubuntu-latest
     steps:
       - run: echo "The job was triggered by a ${{ github.event_name }} event."
-      - run: echo $filename
       - run: echo "This job is now running on a ${{ runner.os }} server hosted by GitHub!"
       - run: echo "The name of your branch is ${{ github.ref }} and your repository is ${{ github.repository }}."
       - name: Check out branch code
@@ -28,18 +23,3 @@ jobs:
         with:
           name: ${{ env.filename }}
           path: ${{ env.filename }}
-      - name: Grant execute permission to gradlew
-        run: chmod +x android/gradlew
-      - name: Set up JDK 17
-        uses: actions/setup-java@v2
-        with:
-          distribution: "adopt"
-          java-version: "17"
-      - name: Build Android Release
-        run: cd android && ./gradlew assembleRelease
-      - name: Upload Build
-        uses: actions/upload-artifact@v4
-        with:
-          name: release-android
-          path: android/app/build/outputs/apk/release/app-release.apk
-          retention-days: 3
