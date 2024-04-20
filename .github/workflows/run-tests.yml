@@ -20,6 +20,8 @@ jobs:
     runs-on: ubuntu-latest
     needs: install-npm
     steps:
+      - name: Check out branch code
+        uses: actions/checkout@v4
       - run: echo "filename=test_$(date +'%Y-%m-%d_%H-%M').txt" >> $GITHUB_ENV
       - name: Run Unit/Integration tests and log results
         run: npm test > $filename
