@@ -1,5 +1,5 @@
 name: Run tests
-run-name: ${{ github.actor }} is running tests and builds on React Native "Fairy Table" application.
+run-name: ${{ github.actor }} is running tests on React Native "Fairy Table" application.
 on: [push]
 jobs:
   run-test-build:
