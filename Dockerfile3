@@ -1,0 +1,26 @@
+FROM ubuntu:latest
+
+# Update package index and install necessary packages
+RUN apt-get update && \
+    apt-get install -y openjdk-11-jdk-headless wget unzip && \
+    apt-get clean
+
+# Set up environment variables
+ENV ANDROID_SDK_ROOT /opt/android-sdk
+ENV PATH $PATH:$ANDROID_SDK_ROOT/tools/bin:$ANDROID_SDK_ROOT/platform-tools
+ENV ANDROID_HOME /opt/android-sdk/cmdline-tools
+# Download and install Android SDK tools
+RUN mkdir -p $ANDROID_SDK_ROOT && \
+    cd $ANDROID_SDK_ROOT && \
+    wget -q https://dl.google.com/android/repository/commandlinetools-linux-7583922_latest.zip  && \
+    unzip -q commandlinetools-linux-7583922_latest.zip  && \
+    rm commandlinetools-linux-7583922_latest.zip
+# Accept SDK licenses
+
+RUN yes | $ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT/cmdline-tools --licenses
+#RUN $ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT/cmdline-tools "platform-tools" "platforms;android-30" "emulator"
+RUN yes | $ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT/cmdline-tools --install "system-images;android-30;google_apis;x86"
+#RUN yes | $ANDROID_SDK_ROOT/cmdline-tools/bin/sdkmanager --sdk_root=$ANDROID_SDK_ROOT/cmdline-tools --licenses
+RUN /opt/android-sdk/cmdline-tools/bin/avdmanager --verbose create avd --force --name test --device "pixel" --package "system-images;android-30;google_apis;x86"
+
+#"system-images;android-30;google_apis;x86_64"

@@ -1,0 +1,29 @@
+name: Deploy to EC2
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # Set up SSH
+      - name: Configure SSH
+        uses: webfactory/ssh-agent@v0.5.3
+        with:
+          ssh-private-key: ${{ secrets.SSH_PRIVATE_KEY }}
+
+      # Copy Docker image to EC2
+      - name: Transfer Docker image to EC2
+        run: scp -o StrictHostKeyChecking=no -r path/to/your/image.tar.gz user@ec2-instance-ip:/path/on/ec2/
+
+      # SSH into EC2 and load Docker image
+      - name: SSH into EC2 and load Docker image
+        run: |
+          ssh -o StrictHostKeyChecking=no user@ec2-instance-ip 'docker load -i /path/on/ec2/image.tar.gz'

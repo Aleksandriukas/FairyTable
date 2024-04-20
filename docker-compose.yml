@@ -1,0 +1,33 @@
+version: '3.8'
+
+services:
+  supabase:
+    image: supabase/postgres:latest
+    environment:
+      - POSTGRES_PASSWORD=your_password
+      - POSTGRES_USER=your_username
+      - POSTGRES_DB=your_database
+    ports:
+      - "5432:5432" # Expose the PostgreSQL port
+
+  react-app:
+    build:
+      context: ./app
+      dockerfile: Dockerfile4
+    ports:
+      - "3000:3000" # Expose the React app port
+    environment:
+      - REACT_APP_SUPABASE_URL=https://mfqydzcdynwbovaxyede.supabase.co
+      - REACT_APP_SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im1mcXlkemNkeW53Ym92YXh5ZWRlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTAwNzczNzAsImV4cCI6MjAyNTY1MzM3MH0.SrYkCAcBbzS4V9jpxg_6l04OYB6jkSf3P5rtZQY1QtE
+
+  android-emulator:
+    build:
+      context: ./android-emulator
+      dockerfile: Dockerfile
+    environment:
+      - ANDROID_SDK_ROOT=/usr/local/android-sdk
+    ports:
+      - "5554:5554"
+      - "5555:5555"
+      - "5901:5901"
+      - "6080:6080"
