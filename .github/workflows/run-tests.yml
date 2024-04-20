@@ -28,7 +28,7 @@ jobs:
         uses: actions/checkout@v4
       - run: echo "filename=test_$(date +'%Y-%m-%d_%H-%M').txt" >> $GITHUB_ENV
       - name: Run Unit/Integration tests and log results
-        run: ./node_modules/.bin/jest > $filename
+        run: npm test > $filename
         continue-on-error: true
       - name: Upload test results
         uses: actions/upload-artifact@v4
@@ -42,14 +42,11 @@ jobs:
     steps:
       - name: Check out branch code
         uses: actions/checkout@v4
-      - name: Build React Native
-        run: npm build
       - name: Grant execute permission to gradlew
         run: chmod +x android/gradlew
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
-          distribution: "adopt"
           java-version: "17"
       - name: Build Android Release
         run: cd android && ./gradlew assembleRelease
