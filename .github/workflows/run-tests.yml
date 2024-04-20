@@ -15,6 +15,13 @@ jobs:
       - run: echo "The workflow is now ready to test your code on the runner."
       - name: Install NPM dependencies and store
         run: npm install
+      - name: Cache node_modules
+        uses: actions/cache@v2
+        with:
+          path: node_modules
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
       - uses: actions/upload-artifact@v4
         with:
           name: app-install
@@ -26,6 +33,13 @@ jobs:
     steps:
       - name: Check out branch code
         uses: actions/checkout@v4
+      - name: Cache Jest cache directory
+        uses: actions/cache@v2
+        with:
+          path: ~/.jest
+          key: ${{ runner.os }}-jest-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-jest-
       - run: echo "filename=test_$(date +'%Y-%m-%d_%H-%M').txt" >> $GITHUB_ENV
       - name: Run Unit/Integration tests and log results
         run: npm test > $filename
@@ -47,6 +61,7 @@ jobs:
       - name: Set up JDK 17
         uses: actions/setup-java@v2
         with:
+          distribution: "adopt"
           java-version: "17"
       - name: Build Android Release
         run: cd android && ./gradlew assembleRelease
