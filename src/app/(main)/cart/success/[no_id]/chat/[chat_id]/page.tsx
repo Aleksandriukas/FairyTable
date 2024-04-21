@@ -10,7 +10,6 @@ import {
 import { useParams } from "../../../../../../../../charon";
 import {
   Appbar,
-  Icon,
   IconButton,
   Snackbar,
   Text,
@@ -113,7 +112,7 @@ export default function ChatPage({ children }: PropsWithChildren<{}>) {
 
   return (
     <KeyboardAvoidingView
-      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
       keyboardVerticalOffset={Platform.OS === "ios" ? -insets.bottom : 0}
       style={{ flex: 1 }}
     >
@@ -245,21 +244,29 @@ const ChatItem = ({
             {custumerId.slice(0, 4)}
           </Text>
         )}
-        <Text
-          testID="message"
+        <View
           style={{
+            borderRadius: 6,
+            overflow: "hidden",
+            width: "auto",
             backgroundColor: isSameId
               ? colors.primary
               : colors.secondaryContainer,
             paddingVertical: 6,
-            color: isSameId ? colors.onPrimary : colors.onSecondaryContainer,
             paddingHorizontal: 10,
             maxWidth: "80%",
             alignSelf: isSameId ? "flex-end" : "flex-start",
           }}
         >
-          {content}
-        </Text>
+          <Text
+            testID="message"
+            style={{
+              color: isSameId ? colors.onPrimary : colors.onSecondaryContainer,
+            }}
+          >
+            {content}
+          </Text>
+        </View>
       </View>
     </View>
   );

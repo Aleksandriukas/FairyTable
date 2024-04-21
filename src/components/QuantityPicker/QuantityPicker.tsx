@@ -1,6 +1,5 @@
 import { View } from "react-native";
 import { IconButton, Text } from "react-native-paper";
-import Animated from "react-native-reanimated";
 
 type QuantityPickerProps = {
   quantity: number;
@@ -31,7 +30,7 @@ export const QuantityPicker = ({
           alignItems: "center",
         }}
       >
-        <Animated.Text>{quantity}</Animated.Text>
+        <Text>{quantity}</Text>
       </View>
       <IconButton
         onPress={() => {
