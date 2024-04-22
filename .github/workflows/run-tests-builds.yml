@@ -41,20 +41,17 @@ jobs:
         with:
           name: release-android
           path: android/app/build/outputs/apk/release/app-release.apk
-  run-docker-build:
+  run-emulator-build:
     runs-on: budtmo/docker-android:latest
     steps:
       - name: Run android command
         run: echo "no" | avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" -f
-      - name: run emulator  
-        run: emulator -avd test -no-audio -no-window
       - name: install apk
         uses: actions/upload-artifact@v4
-        with:
-          name: release-android
-          path: android/app/build/outputs/apk/release/app-release.apk
       - run: adb install android/app/build/outputs/apk/release/app-release.apk
-  deploy-docker:
+      - name: run emulator  
+        run: emulator -avd test -no-audio -no-window
+  deploy-emulator-docker:
     env:
       DOCKER_HOST: tcp://docker:2375/
       DOCKER_DRIVER: overlay2
