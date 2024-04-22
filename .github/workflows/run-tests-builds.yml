@@ -1,10 +1,10 @@
 name: Run tests and build
 run-name: ${{ github.actor }} is running tests and builds on React Native "Fairy Table" application.
-on:
-  pull_request:
-    branches:
-      - master
-      - development
+on: [push]
+  # pull_request:
+  #   branches:
+  #     - master
+  #     - development
 jobs:
   run-test-build:
     runs-on: ubuntu-latest
@@ -48,6 +48,20 @@ jobs:
         run: echo "no" | avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" -f
       - name: run emulator  
         run: emulator -avd test -no-audio -no-window
+    deploy-docker:
+      environment:
+        DOCKER_HOST: tcp://docker:2375/
+        DOCKER_DRIVER: overlay2
+          runs-on: docker
+          steps:
+          - run: apk add --no-cache py-pip jq
+          - run: pip install awscli
+          - run: aws configure set region $AWS_DEFAULT_REGION
+          - run: aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_URL
+
+
+            
+
         
         
           retention-days: 3
