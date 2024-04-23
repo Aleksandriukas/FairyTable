@@ -69,7 +69,9 @@ jobs:
 
     - name: Fastlane
       run: bundle exec fastlane my_lane
-  
+
+# GITHUB ACTIONS DOES NOT SUPPORT THESE CONTAINERS
+
   # run-emulator-build:
   #   runs-on: budtmo/docker-android:latest
   #   steps:
