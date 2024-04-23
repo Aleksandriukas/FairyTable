@@ -41,24 +41,53 @@ jobs:
         with:
           name: release-android
           path: android/app/build/outputs/apk/release/app-release.apk
-  run-emulator-build:
-    runs-on: budtmo/docker-android:latest
-    steps:
-      - name: Run android command
-        run: echo "no" | avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" -f
-      - name: install apk
-        uses: actions/upload-artifact@v4
-      - run: adb install android/app/build/outputs/apk/release/app-release.apk
-      - name: run emulator  
-        run: emulator -avd test -no-audio -no-window
-  deploy-emulator-docker:
-    env:
-      DOCKER_HOST: tcp://docker:2375/
-      DOCKER_DRIVER: overlay2
-    runs-on: docker
-    steps:
-      - run: apk add --no-cache py-pip jq
-      - run: pip install awscli
-      - run: aws configure set region $AWS_DEFAULT_REGION
+  my_android_job:
+    runs-on: ubuntu-22.04 # Works also with self hosted runner supporting docker
+    container:
+      image: docker://fabernovel/android:api-29-v1.1.0
+
+  steps:
+    - name: Checkout
+      uses: actions/checkout@v2.1.0
+
+    - name: Ruby Setup
+      uses: ruby/setup-ruby@v1
+      with:
+        bundler-cache: true
+      env:
+        ImageOS: ubuntu20
+
+    - name: Gradle cache
+      uses: actions/cache@v3
+      with:
+        path: |
+          /root/.gradle/caches
+          /root/.gradle/wrapper
+        key: ${{ runner.os }}-gradle-${{ hashFiles('**/*.gradle*', '**/gradle-wrapper.properties') }}
+        restore-keys: |
+          ${{ runner.os }}-gradle-
+
+    - name: Fastlane
+      run: bundle exec fastlane my_lane
+  
+  # run-emulator-build:
+  #   runs-on: budtmo/docker-android:latest
+  #   steps:
+  #     - name: Run android command
+  #       run: echo "no" | avdmanager create avd -n test -k "system-images;android-33;google_apis;x86_64" -f
+  #     - name: install apk
+  #       uses: actions/upload-artifact@v4
+  #     - run: adb install android/app/build/outputs/apk/release/app-release.apk
+  #     - name: run emulator  
+  #       run: emulator -avd test -no-audio -no-window
+  # deploy-emulator-docker:
+  #   env:
+  #     DOCKER_HOST: tcp://docker:2375/
+  #     DOCKER_DRIVER: overlay2
+  #   runs-on: docker
+  #   steps:
+  #     - run: apk add --no-cache py-pip jq
+  #     - run: pip install awscli
+  #     - run: aws configure set region $AWS_DEFAULT_REGION
       - run: aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_URL
           # retention-days: 3
