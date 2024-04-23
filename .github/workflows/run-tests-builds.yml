@@ -86,8 +86,8 @@ jobs:
   #     DOCKER_DRIVER: overlay2
   #   runs-on: docker
   #   steps:
-  #     - run: apk add --no-cache py-pip jq
-  #     - run: pip install awscli
-  #     - run: aws configure set region $AWS_DEFAULT_REGION
-      - run: aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_URL
-          # retention-days: 3
+  # #     - run: apk add --no-cache py-pip jq
+  # #     - run: pip install awscli
+  # #     - run: aws configure set region $AWS_DEFAULT_REGION
+  #     - run: aws ecr get-login-password | docker login --username AWS --password-stdin $AWS_URL
+  #         # retention-days: 3
