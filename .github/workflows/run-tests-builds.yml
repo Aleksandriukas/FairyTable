@@ -46,7 +46,7 @@ jobs:
     container:
       image: docker://fabernovel/android:api-29-v1.1.0
 
-  steps:
+    steps:
     - name: Checkout
       uses: actions/checkout@v2.1.0
 
