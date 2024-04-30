@@ -1,0 +1,54 @@
+appId: 1
+---
+- tapOn:
+    id: "FairyTable"
+- tapOn:
+    id: "icon-button"
+- tapOn:
+    id: "text-input-outlined"
+    index: 0
+- inputText: "maestroAdmin@gmail.com"
+- tapOn:
+    id: "text-input-outlined"
+    index: 1
+- inputText: "maestro"
+- tapOn: "Prisijungti"
+- tapOn:
+    point: "50%,19%"
+- tapOn:
+    id: "text-input-outlined"
+    index: 0
+- copyTextFrom:
+    id: "text-input-outlined"
+    index: 0
+- inputText: "test"
+- tapOn:
+    id: "Return"
+- tapOn:
+    id: "button"
+    index: 2
+- tapOn:
+    id: "icon-button"
+    index: 1
+- scrollUntilVisible:
+    element:
+      id: ${maestro.copiedText + "test"}
+    direction: DOWN
+- tapOn:
+    id: ${maestro.copiedText + "test"}
+- tapOn:
+    id: "text-input-outlined"
+    index: 0
+- repeat:
+    times: 4
+    commands:
+      - tapOn:
+          id: "delete"
+- tapOn:
+    id: "Return"
+- tapOn:
+    id: "button"
+    index: 2
+- tapOn:
+    id: "icon-button"
+    index: 4

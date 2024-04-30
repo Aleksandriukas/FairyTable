@@ -53,7 +53,7 @@ export const PaymentModal = ({ total, onDismiss, ...other }: PaymentModalProps) 
             }, 2000);
             onDismiss?.();
             no.current = data[0].id;
-            linkTo(`/cart/${no.current}/success`);
+            linkTo(`/cart/success/${no.current}`);
         } catch (e) {
             setIsLoading(false);
             console.log(e);

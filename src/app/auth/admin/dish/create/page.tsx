@@ -16,7 +16,7 @@ export type DishCreateBean = {
   title: string;
   description: string;
   price: number;
-  photoURL: string;
+  photoURL: string | null;
 };
 
 export default function DishCreatePage() {
@@ -29,7 +29,7 @@ export default function DishCreatePage() {
     title: "",
     description: "",
     price: 0,
-    photoURL: "",
+    photoURL: null,
   });
 
   const submitCreate = async () => {
@@ -40,6 +40,10 @@ export default function DishCreatePage() {
         const { data, error } = await supabase
           .from("Dish")
           .insert({ ...newData, photoURL: newUrl });
+      } else {
+        const { data, error } = await supabase
+          .from("Dish")
+          .insert({ ...newData });
       }
     } catch (error) {
       console.log(error);
@@ -86,6 +90,23 @@ export default function DishCreatePage() {
           if (response.didCancel || response.errorCode) {
             throw new Error("closed camera!");
           }
+          const uri = response.assets?.at(0)?.uri;
+          if (uri) loadImage(uri);
+
+          const fileName = response.assets?.at(0)?.fileName;
+          setFileName(fileName);
+        }
+      );
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const uploadPhotoFromGallery = async () => {
+    try {
+      await launchImageLibrary(
+        { mediaType: "photo", quality: 0.6 },
+        (response: ImagePickerResponse) => {
           const uri = response.assets?.at(0)?.uri;
           if (uri) loadImage(uri);
 
@@ -167,6 +188,10 @@ export default function DishCreatePage() {
           <View style={{ height: 10 }}></View>
           <Button onPress={uploadPhoto} mode="contained">
             Pridėti patiekalo paveikslėlį
+          </Button>
+          <View style={{ height: 10 }}></View>
+          <Button onPress={uploadPhotoFromGallery} mode="contained">
+            Pridėti patiekalo paveikslėlį iš galerijos
           </Button>
           <View style={{ height: 10 }}></View>
           <Button onPress={submitCreate} mode="contained">

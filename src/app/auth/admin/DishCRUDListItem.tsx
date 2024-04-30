@@ -35,6 +35,8 @@ export const DishCRUDListItem = ({ data }: DishListItemProps) => {
 
   return (
     <TouchableRipple
+      testID={data.title}
+      aria-label={data.title}
       onPress={() => {
         linkTo(`/auth/admin/dish/${data.id}`);
       }}

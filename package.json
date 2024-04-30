@@ -7,7 +7,7 @@
     "ios": "react-native run-ios",
     "lint": "eslint .",
     "start": "react-native start",
-    "test": "jest"
+    "test": "jest --coverage"
   },
   "dependencies": {
     "@react-native-async-storage/async-storage": "^1.22.3",
@@ -32,6 +32,7 @@
     "react-native-safe-area-context": "^4.9.0",
     "react-native-screens": "^3.29.0",
     "react-native-url-polyfill": "^2.0.0",
+    "react-native-uuid": "^2.0.2",
     "react-native-vector-icons": "^10.0.3",
     "rn-fetch-blob": "^0.12.0"
   },

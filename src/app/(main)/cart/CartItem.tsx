@@ -20,6 +20,7 @@ export const CartItem = ({
 }: CartItemProps) => {
   const { updateCart } = useMainContext();
 
+  console.log(data.photoURL.length);
   return (
     <View
       style={{
@@ -31,10 +32,21 @@ export const CartItem = ({
         justifyContent: "space-between",
       }}
     >
-      <Image
-        style={{ height: 64, width: 64, borderRadius: 12 }}
-        source={{ uri: data.photoURL }}
-      />
+      {data.photoURL.length > 10 ? (
+        <Image
+          style={{ height: 64, width: 64, borderRadius: 12 }}
+          source={{ uri: data.photoURL }}
+        />
+      ) : (
+        <View
+          style={{
+            height: 64,
+            width: 64,
+            backgroundColor: "#add",
+            borderRadius: 12,
+          }}
+        ></View>
+      )}
       <View
         style={{
           flex: 1,
