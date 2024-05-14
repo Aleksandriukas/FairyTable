@@ -1,0 +1,32 @@
+# cucumber.yml
+
+# Default profile
+default: --format summary
+
+# Profiles for different environments or configurations
+profiles:
+  # Development environment
+  development:
+    <<: *default
+    # Specify the directory containing feature files
+    features: ./features
+    # Specify the directory containing step definitions
+    require: ./step_definitions/**/*.ts
+    require: ./step_definitions/**/*.js
+    # Specify additional options, such as tags or environment variables
+    # tags: "@smoke"
+    # format: pretty
+    # colors: true
+    # other_env_variable: value
+
+  # Production environment
+  # production:
+  #   <<: *default
+  #   features: ./prod_features
+  #   require: ./prod_step_definitions/**/*.js
+    # other_options...
+
+# Additional global options
+# colors: true
+# strict: true
+# other_global_options...
