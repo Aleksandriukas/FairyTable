@@ -11,7 +11,7 @@ profiles:
     # Specify the directory containing feature files
     features: ./features
     # Specify the directory containing step definitions
-    require: ./step_definitions/**/*.ts
+    # require: ./step_definitions/**/*.ts
     require: ./step_definitions/**/*.js
     # Specify additional options, such as tags or environment variables
     # tags: "@smoke"
