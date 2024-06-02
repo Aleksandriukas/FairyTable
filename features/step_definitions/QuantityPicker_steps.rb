@@ -1,7 +1,7 @@
 # features/step_definitions/quantity_picker_steps.rb
 
-require 'react_test_renderer'
-require_relative '../../src/components/QuantityPicker/QuantityPicker.tsx'
+# require 'react_test_renderer'
+# require_relative '../../src/components/QuantityPicker/QuantityPicker.tsx'
 
 # Mock React component
 class QuantityPicker
