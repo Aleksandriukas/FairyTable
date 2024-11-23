@@ -1,0 +1,34 @@
+appId: 1
+---
+- tapOn:
+    id: "0"
+- tapOn:
+    id: "icon-button"
+    index: 2
+- tapOn:
+    id: "icon-button"
+    index: 1
+- tapOn:
+    id: "button"
+- tapOn:
+    id: "fab-content"
+    retryTapIfNoChange: false
+- tapOn:
+    text: "Apmokėti"
+    retryTapIfNoChange: false
+- tapOn: "Apmoketi"
+- tapOn:
+    id: "No:.1.0"
+- tapOn:
+    id: "text-input-outline"
+- tapOn:
+    id: "com.google.android.inputmethod.latin:id/label"
+    index: 4
+- tapOn:
+    id: "icon-button"
+    index: 1
+- tapOn: "Back"
+- tapOn: "Back"
+- tapOn:
+    id: "icon-button"
+- tapOn: "Taip"

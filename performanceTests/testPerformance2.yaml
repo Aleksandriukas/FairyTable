@@ -1,0 +1,48 @@
+appId: 1
+---
+- tapOn:
+    id: "1"
+- tapOn:
+    id: "icon-button"
+    index: 2
+- tapOn:
+    id: "icon-button"
+    index: 2
+- tapOn: "Įdėti į krepšelį"
+- tapOn: "Back"
+- tapOn:
+    id: "0"
+- tapOn:
+    id: "icon-button"
+    index: 2
+- tapOn:
+    id: "icon-button"
+    index: 2
+- tapOn:
+    id: "icon-button"
+    index: 2
+- tapOn:
+    id: "icon-button"
+    index: 2
+- tapOn:
+    id: "icon-button"
+    index: 2
+- tapOn: "Įdėti į krepšelį"
+- tapOn: "Įdėti į krepšelį"
+- tapOn: "Back"
+- tapOn:
+    id: "fab-content"
+    retryTapIfNoChange: false
+- tapOn:
+    text: "Apmokėti"
+    retryTapIfNoChange: false
+- tapOn: "Apmoketi"
+- tapOn:
+    id: "No:.2.0"
+- tapOn: "Back"
+- tapOn:
+    id: "No:.1.0"
+- tapOn: "Back"
+- tapOn:
+    id: "icon-button"
+- tapOn: "Taip"
